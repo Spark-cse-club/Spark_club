@@ -145,3 +145,31 @@ export const logoutUser = asyncHandler( async(req, res) => {
     );
 });
 
+export const getCurrentUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.userId).select(
+    "_id name email role"
+  );
+
+  if (!user) {
+    throw new ApiError(401, "User not found");
+  }
+
+  const data = {
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+  };
+  
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        data,
+        "User fetched successfully"
+      )
+    );
+});
