@@ -66,7 +66,7 @@ export const createCoreTeam = asyncHandler( async(req, res) => {
     createdBy: req.user.userId,
   });
 
-  await invalidateCache(["coreTeam:all"]);
+  await invalidateCache(["coreTeam:all","stats:all",]);
 
   return res
     .status(201)
@@ -217,7 +217,7 @@ export const deleteCoreTeam = asyncHandler( async( req, res) => {
 
   await member.deleteOne();
 
-  await invalidateCache(["coreTeam:all"]);
+  await invalidateCache(["coreTeam:all","stats:all",]);
 
   return res
     .status(200)

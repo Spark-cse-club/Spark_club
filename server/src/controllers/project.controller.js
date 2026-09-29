@@ -57,7 +57,7 @@ export const createProject = asyncHandler( async(req, res) => {
     createdBy: req.user.userId,
   });
 
-  await invalidateCache(["projects:all"]);
+  await invalidateCache(["projects:all","stats:all",]);
 
   return res
     .status(201)
@@ -216,7 +216,7 @@ export const deleteProject = asyncHandler(async (req, res) => {
   // Delete project from MongoDB
   await project.deleteOne();
 
-  await invalidateCache(["projects:all"]);
+  await invalidateCache(["projects:all","stats:all",]);
 
   return res.status(200).json(
     new ApiResponse(

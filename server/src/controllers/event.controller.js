@@ -69,7 +69,7 @@ export const createEvent = asyncHandler(async (req, res) => {
     createdBy: req.user.userId,
   });
 
-  await invalidateCache(["events:all"]);
+  await invalidateCache(["events:all","stats:all"]);
 
   return res.status(201).json(
     new ApiResponse(
@@ -257,7 +257,9 @@ export const deleteEvent = asyncHandler(async (req, res) => {
   await invalidateCache([
     "events:all",
     `events:${EventId}`,
+    "stats:all",
   ]);
+
 
   return res.status(200).json(
     new ApiResponse(

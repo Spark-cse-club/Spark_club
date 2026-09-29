@@ -57,7 +57,7 @@ export const createGallery = asyncHandler(async( req, res) => {
     createdBy: req.user.userId,
   });
 
-  await invalidateCache(["gallery:all"]);
+  await invalidateCache(["gallery:all","stats:all",]);
 
   return res
     .status(201)
@@ -204,7 +204,7 @@ export const deleteGallery = asyncHandler(async (req, res) => {
 
   await gallery.deleteOne();
 
-  await invalidateCache(["gallery:all"]);
+  await invalidateCache(["gallery:all","stats:all",]);
 
   return res
     .status(200)

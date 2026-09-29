@@ -68,7 +68,7 @@ export const createAchievement = asyncHandler(async(req, res) => {
     createdBy: req.user.userId,
   });
 
-  await invalidateCache(["achievements:all"]);
+  await invalidateCache(["achievements:all","stats:all"]);
 
   return res
     .status(201)
@@ -227,8 +227,8 @@ export const deleteAchievement = asyncHandler(async (req, res) => {
 
   await achievement.deleteOne();
 
-  await invalidateCache(["achievements:all"]);
-  
+  await invalidateCache(["achievements:all","stats:all"]);
+
   return res
     .status(200)
     .json(

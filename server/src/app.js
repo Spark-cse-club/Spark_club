@@ -15,7 +15,8 @@ import galleryRoutes from "./routes/gallery.routes.js";
 import teamsRoutes from "./routes/team.routes.js";
 import acheivementsRoutes from "./routes/achievement.routes.js";
 import contactRoutes from "./routes/contact.routes.js";
- 
+import statsRoutes from "./routes/stats.route.js" ;
+
 const app = express();
 
 const limiter = rateLimit({
@@ -50,6 +51,7 @@ app.use("/api/gallery", galleryRoutes);
 app.use("/api/teams", teamsRoutes);
 app.use("/api/achievements", acheivementsRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/stats", statsRoutes);
 
 app.use(errorMiddleware);
 
