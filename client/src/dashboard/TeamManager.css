@@ -1,0 +1,265 @@
+.team-manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.team-manager-title {
+  font-size: 1.5rem;
+  font-family: var(--font);
+  font-weight: 700;
+}
+
+.team-manager-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.65rem 1.5rem;
+  border-radius: var(--radius-full);
+  border: none;
+  transition: var(--transition);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  font-family: var(--font);
+}
+
+.team-manager-btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(99,102,241,0.4);
+}
+.team-manager-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(99,102,241,0.5);
+}
+.team-manager-btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.team-manager-btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.team-manager-btn-ghost:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--border-strong);
+}
+
+.team-manager-btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.team-manager-btn-icon:hover {
+  background: var(--accent-bg-hover);
+  border-color: var(--border-strong);
+}
+.team-manager-btn-delete {
+  color: #ef4444;
+}
+
+.team-manager-filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.team-manager-filter-tab {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font);
+}
+.team-manager-filter-tab:hover {
+  border-color: var(--border-strong);
+}
+.team-manager-filter-tab.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--border-strong);
+}
+
+.team-manager-table-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.team-manager-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.team-manager-data-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.team-manager-data-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+.team-manager-data-table tr:last-child td { border-bottom: none; }
+.team-manager-data-table tr:hover td { background: var(--accent-bg); }
+
+.team-manager-empty-row {
+  text-align: center;
+  padding: 2rem;
+}
+
+.team-manager-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.team-manager-profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.team-manager-profile-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-manager-profile-name {
+  font-weight: 600;
+  display: block;
+}
+
+.team-manager-profile-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.team-manager-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--border-strong);
+}
+
+.team-manager-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.team-manager-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.team-manager-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.team-manager-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 640px) {
+  .team-manager-form-grid { grid-template-columns: 1fr; }
+}
+
+.team-manager-form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.team-manager-form-input,
+.team-manager-form-textarea,
+.team-manager-form-select {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: var(--transition);
+  width: 100%;
+  outline: none;
+  font-family: var(--font);
+}
+
+.team-manager-form-input:focus,
+.team-manager-form-textarea:focus,
+.team-manager-form-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.team-manager-form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.team-manager-form-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.team-manager-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}

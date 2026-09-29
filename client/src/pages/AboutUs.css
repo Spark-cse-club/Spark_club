@@ -1,0 +1,154 @@
+.about-page {
+  width: 100%;
+}
+
+.about-page-hero {
+  padding: 3.5rem 1.25rem 2.5rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.about-page-hero-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-page-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.about-page-heading {
+  font-size: clamp(1.85rem, 4vw, 2.6rem);
+  margin-bottom: 1rem;
+}
+
+.about-page-heading-accent {
+  color: var(--accent);
+}
+
+.about-page-intro {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.about-page-mission {
+  padding: 3.5rem 1.25rem;
+}
+
+.about-page-mission-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.about-page-mission-copy h2 {
+  margin: 0.7rem 0 1rem;
+}
+
+.about-page-mission-copy p {
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.about-page-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.about-page-fact {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.2rem 0.8rem;
+  text-align: center;
+}
+
+.about-page-fact-value {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.about-page-fact-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.about-page-values {
+  padding: 1rem 1.25rem 4.5rem;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+}
+
+.about-page-values-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.about-page-values-intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.about-page-values-heading {
+  margin-top: 0.5rem;
+}
+
+.about-page-values-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+.about-page-value-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.about-page-value-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.about-page-value-title {
+  margin-bottom: 0.35rem;
+  font-size: 1rem;
+}
+
+.about-page-value-desc {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 860px) {
+  .about-page-mission-inner,
+  .about-page-values-grid {
+    grid-template-columns: 1fr;
+  }
+}

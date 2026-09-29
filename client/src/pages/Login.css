@@ -1,0 +1,142 @@
+.login-page {
+  min-height: calc(100vh - var(--nav-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: 2rem 1rem;
+}
+
+.login-page-panel {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-page-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2.1rem 1.7rem;
+  box-shadow: var(--shadow-md);
+}
+
+.login-page-brand {
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.login-page-brand-mark {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  margin: 0 auto 0.85rem;
+  object-fit: cover;
+}
+
+.login-page-heading {
+  margin-bottom: 0.3rem;
+}
+
+.login-page-sub {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.login-page-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.login-page-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.login-page-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.login-page-input-wrap {
+  position: relative;
+}
+
+.login-page-input-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.login-page-input {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 2.6rem 0.7rem 2.4rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.login-page-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.login-page-toggle-visibility {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 0;
+  display: flex;
+}
+
+.login-page-submit {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.login-page-submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.login-page-home-link-wrap {
+  margin-top: 1.35rem;
+  text-align: center;
+}
+
+.login-page-home-link {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.login-page-home-link:hover {
+  color: var(--accent);
+}
+
+.login-page-note {
+  text-align: center;
+  margin-top: 1.1rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}

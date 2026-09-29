@@ -1,185 +1,252 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL : import.meta.env.VITE_API_URL,
-  withCredentials : true,
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
 });
 
-
-/// Auth APIs ///
-
-export const loginUser = async(data) => {
-  const response = await api.post(
-    "/auth/login", data
-  );
-
-  return response.data;
+/* ──── AUTH ──────────────────────────────────────────────────── */
+export const loginUser = async (data) => {
+  const res = await api.post("/auth/login", data);
+  return res.data;
 };
 
 export const logoutUser = async () => {
-  const response = api.post(
-    "/auth/logout"
-  );
-
-  return (await response).data;
+  const res = await api.post("/auth/logout");
+  return res.data;
 };
 
 export const getCurrentUser = async () => {
-  const response = await api.get(
-    "/auth/me"
-  );
-  
-  return response.data;
+  const res = await api.get("/auth/me");
+  return res.data;
 };
 
 export const refreshAccessToken = async () => {
-  const response = await api.post(
-    "/auth/refresh"
-  );
-
-  return response.data;
+  const res = await api.post("/auth/refresh");
+  return res.data;
 };
 
-///// Events ////
+/* ──── EVENTS ────────────────────────────────────────────────── */
 export const getEvents = async () => {
-  const response = await api.get(
-    "/events"
-  );
-
-  return response.data;
+  const res = await api.get("/events");
+  return res.data;
 };
 
 export const getEventById = async (id) => {
-  const response = await api.get(
-    `/events/${id}`
-  );
-
-  return response.data;
+  const res = await api.get(`/events/${id}`);
+  return res.data;
 };
 
 export const createEvent = async (data) => {
-  const response = await api.post(
-    "/events/create", data
-  );
-
-  return response.data;
+  const res = await api.post("/events/create", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
 };
 
 export const updateEvent = async (id, data) => {
-  const response = await api.patch(
-    `/events/${id}/edit`, data
-  );
-
-  return response.data;
+  const res = await api.patch(`/events/${id}/edit`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
 };
 
 export const deleteEvent = async (id) => {
-  const response = await api.delete(
-    `/events/${id}/delete`
-  );
-
-  return response.data;
+  const res = await api.delete(`/events/${id}/delete`);
+  return res.data;
 };
 
-///// Projects /////
-export const getProjects = async() => {
+/* ──── PROJECTS ──────────────────────────────────────────────── */
+export const getProjects = async () => {
+  const res = await api.get("/projects");
+  return res.data;
+};
 
-}
+export const getProjectById = async (id) => {
+  const res = await api.get(`/projects/${id}`);
+  return res.data;
+};
 
-export const getProjectById  = async(id) => {
+export const createProject = async (data) => {
+  const res = await api.post("/projects/create", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
 
-}
+export const updateProject = async (id, data) => {
+  const res = await api.patch(`/projects/${id}/edit`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
 
-export const createProject = async(data) => {
+export const deleteProject = async (id) => {
+  const res = await api.delete(`/projects/${id}/delete`);
+  return res.data;
+};
 
-}
+/* ──── GALLERY ───────────────────────────────────────────────── */
+export const getGallery = async () => {
+  const res = await api.get("/gallery");
+  return res.data;
+};
 
-export const updateProject = async(id, data) => {
+export const getGalleryById = async (id) => {
+  const res = await api.get(`/gallery/${id}`);
+  return res.data;
+};
 
-}
+export const createGallery = async (data) => {
+  const res = await api.post("/gallery/create", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
 
-export const deleteProject = (id) => {
+export const updateGallery = async (id, data) => {
+  const res = await api.patch(`/gallery/${id}/edit`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
 
-}
+export const deleteGallery = async (id) => {
+  const res = await api.delete(`/gallery/${id}/delete`);
+  return res.data;
+};
 
-///// Gallery   ////
-export const getGallery = async() => {
+export const updateGalleryImage = async (galleryId, imageId, data) => {
+  const res = await api.patch(`/gallery/${galleryId}/images/${imageId}`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
 
-}
+export const deleteGalleryImage = async (galleryId, imageId) => {
+  const res = await api.delete(`/gallery/${galleryId}/images/${imageId}`);
+  return res.data;
+};
 
-export const getGalleryById = async(id) => {
+/* ──── ACHIEVEMENTS ──────────────────────────────────────────── */
+export const getAchievements = async () => {
+  const res = await api.get("/achievements");
+  return res.data;
+};
 
-}
+export const getAchievementById = async (id) => {
+  const res = await api.get(`/achievements/${id}`);
+  return res.data;
+};
 
-export const createGallery = async(data) => {
+export const createAchievement = async (data) => {
+  const res = await api.post("/achievements/create", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
 
-}
+export const updateAchievement = async (id, data) => {
+  const res = await api.patch(`/achievements/${id}/edit`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
 
-export const updateGallery = async(id, data) => {
+export const deleteAchievement = async (id) => {
+  const res = await api.delete(`/achievements/${id}/delete`);
+  return res.data;
+};
 
-}
+export const updateAchievementImage = async (achievementId, imageId, data) => {
+  const res = await api.patch(
+    `/achievements/${achievementId}/images/${imageId}`,
+    data,
+    { 
+      headers: 
+      { 
+        "Content-Type": "multipart/form-data" 
+      } 
+    }
+  );
+  return res.data;
+};
 
-export const deleteGallery = async(id) => {
+export const deleteAchievementImage = async (achievementId, imageId) => {
+  const res = await api.delete(`/achievements/${achievementId}/images/${imageId}`);
+  return res.data;
+};
 
-}
+/* ──── TEAM – CORE ───────────────────────────────────────────── */
+export const getCoreTeam = async () => {
+  const res = await api.get("/teams/core");
+  return res.data;
+};
 
-export const updateGalleryImage = async(id, imageId, data) => {
+export const getCoreTeamById = async (id) => {
+  const res = await api.get(`/teams/core/${id}`);
+  return res.data;
+};
 
-}
-export const deleteGalleryImage = async(id, imageId) => {
+export const createCoreTeamMember = async (data) => {
+  const res = await api.post("/teams/core/create", data, {
+    headers: { 
+      "Content-Type": "multipart/form-data" 
+    },
+  });
+  return res.data;
+};
 
-}
+export const updateCoreTeamMember = async (id, data) => {
+  const res = await api.patch(`/teams/core/${id}/edit`, data, {
+    headers: { 
+      "Content-Type": "multipart/form-data" 
+    },
+  });
+  return res.data;
+};
 
-// Achievements ////
-export const getAchievements = async() => {
+export const deleteCoreTeamMember = async (id) => {
+  const res = await api.delete(`/teams/core/${id}/delete`);
+  return res.data;
+};
 
-}
+/* ──── TEAM – FACULTY ────────────────────────────────────────── */
+export const getFaculty = async () => {
+  const res = await api.get("/teams/faculty");
+  return res.data;
+};
 
-export const getAchievementById = (id) => {
+export const getFacultyById = async (id) => {
+  const res = await api.get(`/teams/faculty/${id}`);
+  return res.data;
+};
 
-}
+export const createFaculty = async (data) => {
+  const res = await api.post("/teams/faculty/create", data, {
+    headers: { 
+      "Content-Type": "multipart/form-data" 
+    },
+  });
+  return res.data;
+};
 
-export const createAchievement = async(data) => {
+export const updateFaculty = async (id, data) => {
+  const res = await api.patch(`/teams/faculty/${id}`, data, {
+    headers: { 
+      "Content-Type": "multipart/form-data" 
+    },
+  });
+  return res.data;
+};
 
-}
+export const deleteFaculty = async (id) => {
+  const res = await api.delete(`/teams/faculty/${id}`);
+  return res.data;
+};
 
-export const updateAchievement = async(id, data) => {
-
-}
-
-export const deleteAchievement = async(id) => {
-
-}
-
-export const updateAchievementImage = async(id, imageId, data) => {
-
-}
-
-export const deleteAchievementImage = async(id, imageId) => {
-
-}
-
-// Team   /// 
-export const getTeam = async() => {
-
-}
-
-export const getTeamById = async(id) => {
-
-}
-
-export const createTeamMember = async(data) => {
-
-}
-
-export const updateTeamMember = async(id, data) => {
-
-}
-
-export const deleteTeamMember = async(id) => {
-
-}
-
-export const updateTeamImage = async(id, data) => {
-
-}
+/* ──── CONTACT ───────────────────────────────────────────────── */
+export const sendContact = async (data) => {
+  const res = await api.post("/contact", data);
+  return res.data;
+};
