@@ -4,9 +4,16 @@ import { FiCode, FiGithub, FiCalendar } from "react-icons/fi";
 import { getProjects } from "../api/api.js";
 import Loader from "../components/Loader.jsx";
 
-const fadeUp = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
+import "./Projects.css";
 
-const catColors = { software: "badge-purple", hardware: "badge-orange" };
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -14,74 +21,192 @@ export default function Projects() {
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    getProjects().then((res) => setProjects(res?.data || [])).catch(() => {}).finally(() => setLoading(false));
+    getProjects()
+      .then((res) => setProjects(res?.data || []))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
-  const filtered = filter === "all" ? projects : projects.filter((p) => p.category === filter);
+  const filteredProjects =
+    filter === "all"
+      ? projects
+      : projects.filter((project) => project.category === filter);
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
-    <div>
-      <section style={{ padding: "4rem 0 2rem", background: "var(--bg-secondary)", position: "relative", overflow: "hidden" }}>
-        <div className="orb orb-2" style={{ opacity: 0.2 }} />
-        <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
-          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}>
-            <motion.div variants={fadeUp}><span className="section-label"><FiCode size={12} /> Projects</span></motion.div>
-            <motion.h1 variants={fadeUp} style={{ marginBottom: "1rem" }}>Club <span className="gradient-text">Projects</span></motion.h1>
-            <motion.p variants={fadeUp} style={{ color: "var(--text-secondary)", maxWidth: 500, margin: "0 auto" }}>
-              Innovative software and hardware projects built by our talented members.
+    <main className="spark-projects-page">
+
+      {/* =========================
+          HERO
+      ========================== */}
+      <section className="spark-projects-hero">
+        <div className="spark-projects-hero-orb" />
+
+        <div className="spark-projects-hero-inner">
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={{
+              show: {
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
+          >
+            <motion.div variants={fadeUp}>
+              <span className="spark-projects-kicker">
+                <FiCode size={13} />
+                Projects
+              </span>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeUp}
+              className="spark-projects-heading"
+            >
+              Club{" "}
+              <span className="spark-projects-heading-accent">
+                Projects
+              </span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              className="spark-projects-lede"
+            >
+              Innovative software and hardware projects built by
+              our talented members.
             </motion.p>
           </motion.div>
         </div>
       </section>
 
-      <section className="section" style={{ background: "var(--bg-primary)" }}>
-        <div className="container">
-          <div className="filter-tabs">
-            {["all", "software", "hardware"].map((f) => (
-              <button key={f} className={`filter-tab${filter === f ? " active" : ""}`} onClick={() => setFilter(f)}>
-                {f === "all" ? "All Projects" : f.charAt(0).toUpperCase() + f.slice(1)}
+      {/* =========================
+          PROJECTS
+      ========================== */}
+      <section className="spark-projects-body">
+        <div className="spark-projects-inner">
+
+          {/* Filters */}
+          <div className="spark-projects-filters">
+            {["all", "software", "hardware"].map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setFilter(category)}
+                className={`spark-projects-filter ${
+                  filter === category
+                    ? "spark-projects-filter-active"
+                    : ""
+                }`}
+              >
+                {category === "all"
+                  ? "All Projects"
+                  : category.charAt(0).toUpperCase() +
+                    category.slice(1)}
               </button>
             ))}
           </div>
 
-          {filtered.length === 0 ? (
-            <div className="empty-state"><div className="empty-state-icon">🔍</div><p>No projects found.</p></div>
+          {/* Empty State */}
+          {filteredProjects.length === 0 ? (
+            <div className="spark-projects-empty">
+              <div className="spark-projects-empty-icon">
+                🔍
+              </div>
+
+              <p>No projects found.</p>
+            </div>
           ) : (
-            <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="grid-3">
-              {filtered.map((project) => (
-                <motion.div key={project._id} variants={fadeUp} className="card">
+            <motion.div
+              className="spark-projects-grid"
+              initial="hidden"
+              animate="show"
+              variants={{
+                show: {
+                  transition: {
+                    staggerChildren: 0.08,
+                  },
+                },
+              }}
+            >
+              {filteredProjects.map((project) => (
+                <motion.article
+                  key={project._id}
+                  variants={fadeUp}
+                  className="spark-projects-card"
+                >
+                  {/* Image */}
                   {project.image?.url ? (
-                    <img src={project.image.url} alt={project.projectName}
-                      style={{ width: "100%", height: 180, objectFit: "cover", borderRadius: "var(--radius-md)", marginBottom: "1rem" }} />
+                    <img
+                      src={project.image.url}
+                      alt={project.projectName}
+                      className="spark-projects-cover"
+                    />
                   ) : (
-                    <div style={{ width: "100%", height: 180, borderRadius: "var(--radius-md)", background: "linear-gradient(135deg,#6366f1,#8b5cf6)", marginBottom: "1rem", display: "flex", alignItems: "center", justifyContent: "center", opacity: 0.7 }}>
-                      <FiCode size={40} color="white" />
+                    <div className="spark-projects-cover-fallback">
+                      <FiCode size={40} />
                     </div>
                   )}
-                  <span className={`badge ${catColors[project.category] || "badge"}`} style={{ marginBottom: "0.75rem" }}>{project.category}</span>
-                  <h3 style={{ fontSize: "1rem", marginBottom: "0.5rem" }}>{project.projectName}</h3>
-                  <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "1rem", WebkitLineClamp: 2, display: "-webkit-box", WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                    {project.description}
-                  </p>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.8rem", color: "var(--text-muted)" }}>
-                    <span style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                      <FiCalendar size={12} /> {new Date(project.startDate).getFullYear()}
+
+                  {/* Content */}
+                  <div className="spark-projects-card-body">
+
+                    <span
+                      className={`spark-projects-chip ${
+                        project.category === "software"
+                          ? "spark-projects-chip-software"
+                          : "spark-projects-chip-hardware"
+                      }`}
+                    >
+                      {project.category}
                     </span>
-                    {project.githubLink && (
-                      <a href={project.githubLink} target="_blank" rel="noreferrer"
-                        style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "var(--accent)", textDecoration: "none", fontWeight: 600, fontSize: "0.82rem" }}>
-                        <FiGithub size={14} /> GitHub
-                      </a>
-                    )}
+
+                    <h2 className="spark-projects-card-title">
+                      {project.projectName}
+                    </h2>
+
+                    <p className="spark-projects-card-desc">
+                      {project.description}
+                    </p>
+
+                    {/* Footer */}
+                    <div className="spark-projects-footer-row">
+
+                      <span className="spark-projects-year">
+                        <FiCalendar size={13} />
+
+                        {project.startDate
+                          ? new Date(
+                              project.startDate
+                            ).getFullYear()
+                          : "—"}
+                      </span>
+
+                      {project.githubLink && (
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="spark-projects-github"
+                        >
+                          <FiGithub size={14} />
+                          GitHub
+                        </a>
+                      )}
+
+                    </div>
                   </div>
-                </motion.div>
+                </motion.article>
               ))}
             </motion.div>
           )}
         </div>
       </section>
-    </div>
+    </main>
   );
 }

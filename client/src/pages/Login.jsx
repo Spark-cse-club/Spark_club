@@ -2,33 +2,63 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FiMail, FiLock, FiEye, FiEyeOff, FiZap, FiLogIn } from "react-icons/fi";
+import {
+  FiMail,
+  FiLock,
+  FiEye,
+  FiEyeOff,
+  FiZap,
+  FiLogIn,
+} from "react-icons/fi";
 import { toast } from "react-toastify";
+
 import { loginUser } from "../api/api.js";
 import { login, setLoading } from "../store/authSlice.js";
+
+import "./Login.css";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: "", password: "" });
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.email || !form.password) { toast.error("Email and password are required"); return; }
+
+    if (!form.email || !form.password) {
+      toast.error("Email and password are required");
+      return;
+    }
+
     setSubmitting(true);
     dispatch(setLoading(true));
+
     try {
       const response = await loginUser(form);
+
       dispatch(login(response.data.user));
+
       toast.success("Welcome back! 🎉");
       navigate("/dashboard");
     } catch (err) {
-      const msg = err?.response?.data?.message || "Invalid credentials";
-      toast.error(msg);
+      const message =
+        err?.response?.data?.message || "Invalid credentials";
+
+      toast.error(message);
     } finally {
       setSubmitting(false);
       dispatch(setLoading(false));
@@ -36,95 +66,156 @@ export default function Login() {
   };
 
   return (
-    <div style={{ minHeight: "calc(100vh - var(--nav-height))", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg-primary)", position: "relative", overflow: "hidden", padding: "2rem 1rem" }}>
-      {/* Background orbs */}
-      <div className="orb orb-1" />
-      <div className="orb orb-2" />
+    <main className="spark-login-page">
+      <div className="spark-login-orb spark-login-orb-one" />
+      <div className="spark-login-orb spark-login-orb-two" />
 
       <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.96 }}
+        className="spark-login-container"
+        initial={{ opacity: 0, y: 25, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        style={{ width: "100%", maxWidth: 440, position: "relative", zIndex: 1 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
       >
-        {/* Card */}
-        <div className="glass" style={{ borderRadius: "var(--radius-xl)", padding: "2.5rem", boxShadow: "var(--shadow-lg)" }}>
-          {/* Logo */}
-          <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+        <section className="spark-login-card">
+
+          {/* Brand */}
+          <div className="spark-login-brand">
             <motion.div
+              className="spark-login-brand-icon"
               animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-              style={{ width: 56, height: 56, background: "var(--gradient-primary)", borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1rem", boxShadow: "var(--shadow-glow)" }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatDelay: 3,
+              }}
             >
-              <FiZap color="white" size={26} />
+              <FiZap size={25} />
             </motion.div>
-            <h2 style={{ marginBottom: "0.35rem" }}>Welcome Back</h2>
-            <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>Sign in to your Spark dashboard</p>
+
+            <h1 className="spark-login-title">
+              Welcome Back
+            </h1>
+
+            <p className="spark-login-subtitle">
+              Sign in to your Spark dashboard
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+          {/* Form */}
+          <form
+            onSubmit={handleSubmit}
+            className="spark-login-form"
+          >
             {/* Email */}
-            <div className="form-group">
-              <label className="form-label">Email Address</label>
-              <div style={{ position: "relative" }}>
-                <FiMail size={16} style={{ position: "absolute", left: "0.9rem", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)", pointerEvents: "none" }} />
+            <div className="spark-login-field">
+              <label
+                htmlFor="login-email"
+                className="spark-login-label"
+              >
+                Email Address
+              </label>
+
+              <div className="spark-login-input-wrapper">
+                <FiMail
+                  className="spark-login-input-icon"
+                  size={16}
+                />
+
                 <input
-                  type="email" name="email" value={form.email} onChange={handleChange}
-                  className="form-input" placeholder="you@example.com"
-                  style={{ paddingLeft: "2.5rem" }}
-                  autoComplete="email" required
+                  id="login-email"
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  className="spark-login-input"
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  required
                 />
               </div>
             </div>
 
             {/* Password */}
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <div style={{ position: "relative" }}>
-                <FiLock size={16} style={{ position: "absolute", left: "0.9rem", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)", pointerEvents: "none" }} />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password" value={form.password} onChange={handleChange}
-                  className="form-input" placeholder="••••••••"
-                  style={{ paddingLeft: "2.5rem", paddingRight: "2.75rem" }}
-                  autoComplete="current-password" required
+            <div className="spark-login-field">
+              <label
+                htmlFor="login-password"
+                className="spark-login-label"
+              >
+                Password
+              </label>
+
+              <div className="spark-login-input-wrapper">
+                <FiLock
+                  className="spark-login-input-icon"
+                  size={16}
                 />
-                <button type="button" onClick={() => setShowPassword(!showPassword)}
-                  style={{ position: "absolute", right: "0.9rem", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0, display: "flex" }}>
-                  {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
+
+                <input
+                  id="login-password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  className="spark-login-input spark-login-password-input"
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  required
+                />
+
+                <button
+                  type="button"
+                  className="spark-login-password-toggle"
+                  onClick={() =>
+                    setShowPassword((prev) => !prev)
+                  }
+                  aria-label={
+                    showPassword
+                      ? "Hide password"
+                      : "Show password"
+                  }
+                >
+                  {showPassword ? (
+                    <FiEyeOff size={16} />
+                  ) : (
+                    <FiEye size={16} />
+                  )}
                 </button>
               </div>
             </div>
 
+            {/* Submit */}
             <motion.button
-              type="submit" className="btn btn-primary"
+              type="submit"
+              className="spark-login-submit"
               disabled={submitting}
-              whileTap={{ scale: 0.97 }}
-              style={{ width: "100%", padding: "0.85rem", fontSize: "0.95rem", marginTop: "0.5rem" }}
+              whileTap={{ scale: 0.98 }}
             >
               {submitting ? (
-                <>Signing in...</>
+                "Signing in..."
               ) : (
-                <><FiLogIn size={16} /> Sign In</>
+                <>
+                  <FiLogIn size={16} />
+                  Sign In
+                </>
               )}
             </motion.button>
           </form>
 
-          <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
-            <Link to="/" style={{ color: "var(--text-muted)", fontSize: "0.85rem", textDecoration: "none" }}
-              onMouseEnter={e => e.currentTarget.style.color = "var(--accent)"}
-              onMouseLeave={e => e.currentTarget.style.color = "var(--text-muted)"}
+          {/* Back */}
+          <div className="spark-login-back">
+            <Link
+              to="/"
+              className="spark-login-back-link"
             >
               ← Back to Home
             </Link>
           </div>
-        </div>
+        </section>
 
-        {/* Footer note */}
-        <p style={{ textAlign: "center", marginTop: "1.25rem", fontSize: "0.78rem", color: "var(--text-muted)" }}>
+        <p className="spark-login-note">
           Access restricted to club members only
         </p>
       </motion.div>
-    </div>
+    </main>
   );
 }

@@ -250,3 +250,9 @@ export const sendContact = async (data) => {
   const res = await api.post("/contact", data);
   return res.data;
 };
+
+/* getStats */
+export const getStats = async () => {
+  const response = await api.get("/stats");
+  return response.data;
+};

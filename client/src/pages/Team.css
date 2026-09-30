@@ -1,198 +1,370 @@
-.team-page {
+/* =========================================================
+   TEAM PAGE
+   ========================================================= */
+
+.spark-team-page {
   width: 100%;
+  min-height: 100%;
 }
 
-.team-page-hero {
-  padding: 3.25rem 1.25rem 2.25rem;
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.spark-team-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 3.5rem 1.25rem 2.5rem;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border);
 }
 
-.team-page-hero-inner {
-  max-width: 1180px;
+.spark-team-hero-orb {
+  position: absolute;
+  top: -150px;
+  right: -100px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.07;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.spark-team-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1180px);
   margin: 0 auto;
   text-align: center;
 }
 
-.team-page-kicker {
+.spark-team-kicker {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+  margin-bottom: 0.8rem;
+  color: var(--accent);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.spark-team-heading {
+  margin: 0 0 0.7rem;
+  font-size: clamp(1.9rem, 4vw, 2.65rem);
+  line-height: 1.15;
+}
+
+.spark-team-heading-accent {
   color: var(--accent);
-  margin-bottom: 0.75rem;
 }
 
-.team-page-heading {
-  font-size: clamp(1.85rem, 4vw, 2.6rem);
-  margin-bottom: 0.7rem;
-}
-
-.team-page-heading-accent {
-  color: var(--accent);
-}
-
-.team-page-lede {
-  color: var(--text-secondary);
-  font-size: 1.02rem;
+.spark-team-lede {
   max-width: 520px;
   margin: 0 auto;
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+  line-height: 1.7;
 }
 
-.team-page-body {
-  padding: 2.5rem 1.25rem 4.5rem;
+/* =========================================================
+   BODY
+   ========================================================= */
+
+.spark-team-body {
+  padding: 2.75rem 1.25rem 4.5rem;
+  background: var(--bg-primary);
 }
 
-.team-page-inner {
-  max-width: 1180px;
+.spark-team-inner {
+  width: min(100%, 1180px);
   margin: 0 auto;
 }
 
-.team-page-tabs {
+/* =========================================================
+   TABS
+   ========================================================= */
+
+.spark-team-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  gap: 0.55rem;
+  margin-bottom: 2.25rem;
 }
 
-.team-page-tab {
-  padding: 0.45rem 1.1rem;
-  border-radius: 8px;
+.spark-team-tab {
+  padding: 0.55rem 1.15rem;
   border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   background: var(--bg-secondary);
   color: var(--text-secondary);
   font-size: 0.85rem;
   font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
 }
 
-.team-page-tab-active {
+.spark-team-tab:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.spark-team-tab-active {
+  border-color: var(--accent);
   background: var(--accent);
   color: #fff;
+}
+
+.spark-team-tab-active:hover {
   border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
 }
 
-.team-page-empty {
-  text-align: center;
-  padding: 3.5rem 1rem;
-  color: var(--text-muted);
-}
+/* =========================================================
+   GRID
+   ========================================================= */
 
-.team-page-empty-icon {
-  font-size: 2.2rem;
-  margin-bottom: 0.6rem;
-}
-
-.team-page-grid {
+.spark-team-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem;
 }
 
-.team-page-card {
-  background: var(--bg-card);
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.spark-team-card {
+  padding: 1.5rem 1.2rem 1.35rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 1.4rem 1.15rem 1.3rem;
+  background: var(--bg-card);
   text-align: center;
+  transition:
+    transform var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
 }
 
-.team-page-avatar {
-  width: 88px;
-  height: 88px;
+.spark-team-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.spark-team-faculty-card {
+  padding-bottom: 1.5rem;
+}
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.spark-team-avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.spark-team-avatar {
+  width: 90px;
+  height: 90px;
+  display: block;
+  border: 3px solid var(--accent);
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto 0.9rem;
-  border: 3px solid var(--accent);
+  background: var(--accent-bg);
 }
 
-.team-page-avatar-president { border-color: #4338ca; }
-.team-page-avatar-vice_president { border-color: #6d28d9; }
-.team-page-avatar-secretary { border-color: #15803d; }
-.team-page-avatar-technical_head { border-color: #0e7490; }
-.team-page-avatar-event_head { border-color: #c2410c; }
-.team-page-avatar-web_head { border-color: #be185d; }
-.team-page-avatar-app_head { border-color: #0f766e; }
-.team-page-avatar-dsa_aptitude_head { border-color: #b45309; }
-.team-page-avatar-media_head { border-color: #7e22ce; }
-.team-page-avatar-sports_head { border-color: #b91c1c; }
+.spark-team-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
 
-.team-page-name {
+/* =========================================================
+   MEMBER INFORMATION
+   ========================================================= */
+
+.spark-team-name {
+  margin: 0 0 0.3rem;
+  color: var(--text-primary);
   font-size: 1.02rem;
-  margin-bottom: 0.3rem;
+  line-height: 1.35;
 }
 
-.team-page-role {
+.spark-team-role {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.65rem;
+  padding: 0.22rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--accent-bg);
+  color: var(--accent);
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 0.2rem 0.55rem;
-  border-radius: 6px;
-  background: var(--accent-bg);
-  color: var(--accent);
-  margin-bottom: 0.55rem;
+  line-height: 1.3;
 }
 
-.team-page-dept {
-  font-size: 0.8rem;
+.spark-team-dept {
+  margin: 0 0 0.55rem;
   color: var(--text-muted);
-  margin-bottom: 0.45rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
-.team-page-bio {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.8rem;
+.spark-team-bio {
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  margin: 0 0 1rem;
   overflow: hidden;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
-.team-page-skills {
+.spark-team-designation {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   SKILLS
+   ========================================================= */
+
+.spark-team-skills {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
   justify-content: center;
-  margin-bottom: 0.9rem;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
 }
 
-.team-page-skill {
-  font-size: 0.7rem;
-  padding: 0.15rem 0.5rem;
+.spark-team-skill {
+  padding: 0.18rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
   background: var(--accent-bg);
   color: var(--accent);
-  border-radius: 999px;
-  border: 1px solid var(--border);
+  font-size: 0.7rem;
+  line-height: 1.35;
 }
 
-.team-page-links {
+/* =========================================================
+   SOCIAL LINKS
+   ========================================================= */
+
+.spark-team-links {
   display: flex;
   justify-content: center;
   gap: 0.7rem;
 }
 
-.team-page-social {
+.spark-team-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
   color: var(--text-muted);
+  transition:
+    color var(--transition),
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
 }
 
-.team-page-social:hover {
+.spark-team-social:hover {
+  border-color: var(--border);
+  background: var(--accent-bg);
   color: var(--accent);
+  transform: translateY(-2px);
 }
 
-.team-page-designation {
-  color: var(--accent);
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.spark-team-empty {
+  padding: 4rem 1rem;
+  color: var(--text-muted);
+  text-align: center;
 }
+
+.spark-team-empty p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.spark-team-empty-icon {
+  margin-bottom: 0.7rem;
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 
 @media (max-width: 1024px) {
-  .team-page-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .spark-team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
-  .team-page-grid { grid-template-columns: 1fr; }
+  .spark-team-hero {
+    padding: 3rem 1rem 2.25rem;
+  }
+
+  .spark-team-body {
+    padding: 2.25rem 1rem 3.5rem;
+  }
+
+  .spark-team-tabs {
+    justify-content: center;
+    margin-bottom: 1.75rem;
+  }
+
+  .spark-team-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .spark-team-card {
+    padding: 1.4rem 1rem 1.25rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .spark-team-tab {
+    flex: 1;
+    text-align: center;
+  }
+
+  .spark-team-heading {
+    font-size: 1.8rem;
+  }
+
+  .spark-team-lede {
+    font-size: 0.92rem;
+  }
 }

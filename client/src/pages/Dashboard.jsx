@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 import DashboardSidebar from "../components/DashboardSidebar.jsx";
@@ -9,41 +8,56 @@ import "./Dashboard.css";
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  return (
-    <div className="dashboard-layout">
-      {/* Sidebar */}
-      <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
 
-      {/* Mobile overlay */}
+  return (
+    <div className="spark-dashboard-layout">
+      {/* Sidebar */}
+      <DashboardSidebar
+        isOpen={sidebarOpen}
+        onClose={closeSidebar}
+      />
+
+      {/* Mobile Overlay */}
       {sidebarOpen && (
         <div
-          onClick={() => setSidebarOpen(false)}
-          className="dashboard-mobile-overlay"
+          className="spark-dashboard-overlay"
+          onClick={closeSidebar}
+          aria-hidden="true"
         />
       )}
 
-      {/* Content */}
-      <div className="dashboard-content">
-        {/* Mobile header */}
-        <div className="dashboard-mobile-header">
+      {/* Main Content */}
+      <main className="spark-dashboard-content">
+        {/* Mobile Header */}
+        <header className="spark-dashboard-mobile-header">
           <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="dashboard-mobile-header-btn"
+            type="button"
+            className="spark-dashboard-mobile-button"
+            onClick={() => setSidebarOpen((prev) => !prev)}
+            aria-label={sidebarOpen ? "Close menu" : "Open menu"}
           >
             {sidebarOpen ? <FiX size={18} /> : <FiMenu size={18} />}
           </button>
-          <span className="dashboard-mobile-header-title">Dashboard</span>
-        </div>
 
+          <span className="spark-dashboard-mobile-title">
+            Dashboard
+          </span>
+        </header>
+
+        {/* Dashboard Pages */}
         <motion.div
-          key="outlet"
+          key="dashboard-outlet"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
+          className="spark-dashboard-outlet"
         >
           <Outlet />
         </motion.div>
-      </div>
+      </main>
     </div>
   );
 }
