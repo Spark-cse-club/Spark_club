@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  FiUsers,
-  FiGithub,
-  FiLinkedin,
-  FiExternalLink,
-} from "react-icons/fi";
+import { FiUsers } from "react-icons/fi";
+
 import { getCoreTeam, getFaculty } from "../api/api.js";
-import Loader from "../components/Loader.jsx";
+import Loader from "../components/common/Loader.jsx";
+import TeamCard from "../components/Team/TeamCard.jsx";
+import TeamModal from "../components/Team/TeamModal.jsx";
+
 import "./Team.css";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: {
+    opacity: 0,
+    y: 24,
+  },
+
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5 },
+    transition: {
+      duration: 0.5,
+    },
   },
 };
 
@@ -37,22 +42,49 @@ export default function Team() {
   const [faculty, setFaculty] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("core");
+  const [selectedMember, setSelectedMember] = useState(null);
 
   useEffect(() => {
-    Promise.all([getCoreTeam(), getFaculty()])
-      .then(([t, f]) => {
-        setTeam(t?.data || []);
-        setFaculty(f?.data || []);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    const fetchTeam = async () => {
+      try {
+        const [teamResponse, facultyResponse] = await Promise.all([
+          getCoreTeam(),
+          getFaculty(),
+        ]);
+
+        setTeam(teamResponse?.data || []);
+        setFaculty(facultyResponse?.data || []);
+      } catch (error) {
+        console.error("Failed to fetch team:", error);
+        setTeam([]);
+        setFaculty([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeam();
   }, []);
 
-  if (loading) return <Loader />;
+  const handleViewMore = (member, memberType) => {
+    setSelectedMember({
+      ...member,
+      memberType,
+    });
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMember(null);
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
-    <div className="spark-team-page">
-      {/* Hero */}
+    <main className="spark-team-page">
+      {/*  HERO  */}
+
       <section className="spark-team-hero">
         <div className="spark-team-hero-orb" />
 
@@ -62,7 +94,9 @@ export default function Team() {
             animate="show"
             variants={{
               show: {
-                transition: { staggerChildren: 0.1 },
+                transition: {
+                  staggerChildren: 0.1,
+                },
               },
             }}
           >
@@ -73,27 +107,40 @@ export default function Team() {
               </span>
             </motion.div>
 
-            <motion.h1 variants={fadeUp} className="spark-team-heading">
+            <motion.h1
+              variants={fadeUp}
+              className="spark-team-heading"
+            >
               Meet the{" "}
-              <span className="spark-team-heading-accent">Team</span>
+              <span className="spark-team-heading-accent">
+                Team
+              </span>
             </motion.h1>
 
-            <motion.p variants={fadeUp} className="spark-team-lede">
-              The passionate people driving Spark CSE Club forward.
+            <motion.p
+              variants={fadeUp}
+              className="spark-team-lede"
+            >
+              The passionate people driving Spark CSE Club
+              forward.
             </motion.p>
           </motion.div>
         </div>
       </section>
 
-      {/* Team Content */}
+      {/*  TEAM CONTENT  */}
+
       <section className="spark-team-body">
         <div className="spark-team-inner">
-          {/* Tabs */}
+          {/* TABS */}
+
           <div className="spark-team-tabs">
             <button
               type="button"
               className={`spark-team-tab ${
-                tab === "core" ? "spark-team-tab-active" : ""
+                tab === "core"
+                  ? "spark-team-tab-active"
+                  : ""
               }`}
               onClick={() => setTab("core")}
             >
@@ -103,7 +150,9 @@ export default function Team() {
             <button
               type="button"
               className={`spark-team-tab ${
-                tab === "faculty" ? "spark-team-tab-active" : ""
+                tab === "faculty"
+                  ? "spark-team-tab-active"
+                  : ""
               }`}
               onClick={() => setTab("faculty")}
             >
@@ -111,184 +160,122 @@ export default function Team() {
             </button>
           </div>
 
-          {/* Core Team */}
-          {tab === "core" &&
-            (team.length === 0 ? (
-              <div className="spark-team-empty">
-                <div className="spark-team-empty-icon">👥</div>
-                <p>No team members yet.</p>
-              </div>
-            ) : (
-              <motion.div
-                initial="hidden"
-                animate="show"
-                variants={{
-                  show: {
-                    transition: { staggerChildren: 0.08 },
-                  },
-                }}
-                className="spark-team-grid"
-              >
-                {team.map((member) => (
-                  <motion.article
-                    key={member._id}
-                    variants={fadeUp}
-                    className="spark-team-card"
-                  >
-                    <div className="spark-team-avatar-wrap">
-                      {member.image?.url ? (
-                        <img
-                          src={member.image.url}
-                          alt={member.name}
-                          className="spark-team-avatar"
-                        />
-                      ) : (
-                        <div className="spark-team-avatar spark-team-avatar-fallback">
-                          <FiUsers size={30} />
-                        </div>
-                      )}
-                    </div>
+          {/*  CORE TEAM */}
 
-                    <h3 className="spark-team-name">{member.name}</h3>
+          {tab === "core" && (
+            <>
+              {team.length === 0 ? (
+                <div className="spark-team-empty">
+                  <div className="spark-team-empty-icon">
+                    <FiUsers size={30} />
+                  </div>
 
-                    <span className="spark-team-role">
-                      {roleLabels[member.role] || member.role}
-                    </span>
+                  <p>No team members yet.</p>
+                </div>
+              ) : (
+                <motion.div
+                  className="spark-team-grid"
+                  initial="hidden"
+                  animate="show"
+                  variants={{
+                    show: {
+                      transition: {
+                        staggerChildren: 0.08,
+                      },
+                    },
+                  }}
+                >
+                  {team.map((member) => (
+                    <motion.div
+                      key={member._id}
+                      variants={fadeUp}
+                    >
+                      <TeamCard
+                        member={member}
+                        memberType="core"
+                        roleLabel={
+                          roleLabels[member.role] ||
+                          member.role
+                        }
+                        onViewMore={() =>
+                          handleViewMore(
+                            member,
+                            "core"
+                          )
+                        }
+                      />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </>
+          )}
 
-                    {member.department && (
-                      <p className="spark-team-dept">
-                        {member.department}
-                        {member.year && ` • ${member.year}`}
-                      </p>
-                    )}
+          {/*   FACULTY ADVISORS  */}
 
-                    {member.bio && (
-                      <p className="spark-team-bio">{member.bio}</p>
-                    )}
+          {tab === "faculty" && (
+            <>
+              {faculty.length === 0 ? (
+                <div className="spark-team-empty">
+                  <div className="spark-team-empty-icon">
+                    <FiUsers size={30} />
+                  </div>
 
-                    {member.skills?.length > 0 && (
-                      <div className="spark-team-skills">
-                        {member.skills.slice(0, 4).map((skill) => (
-                          <span key={skill} className="spark-team-skill">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className="spark-team-links">
-                      {member.github && (
-                        <a
-                          href={member.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="spark-team-social"
-                          aria-label={`${member.name} GitHub`}
-                        >
-                          <FiGithub size={18} />
-                        </a>
-                      )}
-
-                      {member.linkedin && (
-                        <a
-                          href={member.linkedin}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="spark-team-social"
-                          aria-label={`${member.name} LinkedIn`}
-                        >
-                          <FiLinkedin size={18} />
-                        </a>
-                      )}
-
-                      {member.portfolio && (
-                        <a
-                          href={member.portfolio}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="spark-team-social"
-                          aria-label={`${member.name} Portfolio`}
-                        >
-                          <FiExternalLink size={18} />
-                        </a>
-                      )}
-                    </div>
-                  </motion.article>
-                ))}
-              </motion.div>
-            ))}
-
-          {/* Faculty */}
-          {tab === "faculty" &&
-            (faculty.length === 0 ? (
-              <div className="spark-team-empty">
-                <div className="spark-team-empty-icon">👨‍🏫</div>
-                <p>No faculty listed yet.</p>
-              </div>
-            ) : (
-              <motion.div
-                initial="hidden"
-                animate="show"
-                variants={{
-                  show: {
-                    transition: { staggerChildren: 0.08 },
-                  },
-                }}
-                className="spark-team-grid"
-              >
-                {faculty.map((member) => (
-                  <motion.article
-                    key={member._id}
-                    variants={fadeUp}
-                    className="spark-team-card spark-team-faculty-card"
-                  >
-                    <div className="spark-team-avatar-wrap">
-                      {member.image?.url ? (
-                        <img
-                          src={member.image.url}
-                          alt={member.name}
-                          className="spark-team-avatar"
-                        />
-                      ) : (
-                        <div className="spark-team-avatar spark-team-avatar-fallback">
-                          <FiUsers size={30} />
-                        </div>
-                      )}
-                    </div>
-
-                    <h3 className="spark-team-name">{member.name}</h3>
-
-                    <p className="spark-team-designation">
-                      {member.designation}
-                    </p>
-
-                    <p className="spark-team-dept">
-                      {member.department}
-                    </p>
-
-                    {member.bio && (
-                      <p className="spark-team-bio">{member.bio}</p>
-                    )}
-
-                    {member.linkedin && (
-                      <div className="spark-team-links">
-                        <a
-                          href={member.linkedin}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="spark-team-social"
-                          aria-label={`${member.name} LinkedIn`}
-                        >
-                          <FiLinkedin size={18} />
-                        </a>
-                      </div>
-                    )}
-                  </motion.article>
-                ))}
-              </motion.div>
-            ))}
+                  <p>No faculty listed yet.</p>
+                </div>
+              ) : (
+                <motion.div
+                  className="spark-team-grid"
+                  initial="hidden"
+                  animate="show"
+                  variants={{
+                    show: {
+                      transition: {
+                        staggerChildren: 0.08,
+                      },
+                    },
+                  }}
+                >
+                  {faculty.map((member) => (
+                    <motion.div
+                      key={member._id}
+                      variants={fadeUp}
+                    >
+                      <TeamCard
+                        member={member}
+                        memberType="faculty"
+                        roleLabel={member.designation}
+                        onViewMore={() =>
+                          handleViewMore(
+                            member,
+                            "faculty"
+                          )
+                        }
+                      />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </>
+          )}
         </div>
       </section>
-    </div>
+
+      {/*   PROFILE MODAL  */}
+
+      {selectedMember && (
+        <TeamModal
+          member={selectedMember}
+          memberType={selectedMember.memberType}
+          roleLabel={
+            selectedMember.memberType === "core"
+              ? roleLabels[selectedMember.role] ||
+                selectedMember.role
+              : selectedMember.designation
+          }
+          onClose={handleCloseModal}
+        />
+      )}
+    </main>
   );
 }

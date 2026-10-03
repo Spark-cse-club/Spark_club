@@ -1,449 +1,399 @@
-/* =========================================================
-   GALLERY PAGE
-   ========================================================= */
+/*  GALLERY PAGE */
 
 .spark-gallery-page {
-  width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-/* =========================================================
-   HERO
-   ========================================================= */
+
+/*  HERO */
 
 .spark-gallery-hero {
   position: relative;
+  min-height: 278px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
   overflow: hidden;
-  padding: 3.5rem 1.25rem 2.5rem;
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .spark-gallery-hero-orb {
   position: absolute;
-  top: -150px;
-  right: -100px;
-  width: 360px;
-  height: 360px;
+  width: 330px;
+  height: 330px;
+  right: -60px;
+  top: -95px;
   border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.07;
+  background: var(--hero-circle);
   pointer-events: none;
 }
 
 .spark-gallery-hero-inner {
   position: relative;
   z-index: 1;
-  width: min(100%, 1180px);
-  margin: 0 auto;
+  width: 100%;
+  max-width: 760px;
   text-align: center;
 }
 
 .spark-gallery-kicker {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  margin-bottom: 0.8rem;
-  color: var(--accent);
-  font-size: 0.75rem;
-  font-weight: 700;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: var(--accent-color);
+  font-size: 0.85rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .spark-gallery-heading {
-  margin: 0 0 0.7rem;
-  font-size: clamp(1.9rem, 4vw, 2.65rem);
-  line-height: 1.15;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(2.5rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
 .spark-gallery-heading-accent {
-  color: var(--accent);
+  color: var(--accent-color);
 }
 
 .spark-gallery-lede {
-  max-width: 520px;
-  margin: 0 auto;
+  max-width: 650px;
+  margin: 18px auto 0;
   color: var(--text-secondary);
-  font-size: 1.02rem;
-  line-height: 1.7;
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
-/* =========================================================
-   BODY
-   ========================================================= */
+
+/*  GALLERY BODY */
 
 .spark-gallery-body {
-  padding: 2.75rem 1.25rem 4.5rem;
-  background: var(--bg-primary);
+  width: 100%;
+  padding: 50px max(7.5%, 40px) 90px;
+  background: var(--section-bg);
 }
 
 .spark-gallery-inner {
-  width: min(100%, 1180px);
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-/* =========================================================
-   FILTERS
-   ========================================================= */
+
+/*  FILTERS */
 
 .spark-gallery-filters {
   display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 36px;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.9rem;
 }
 
 .spark-gallery-filter {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--bg-secondary);
+  height: 38px;
+  padding: 0 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-bg);
   color: var(--text-secondary);
-  font-size: 0.82rem;
+  font-family: inherit;
+  font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
   transition:
-    background var(--transition),
-    color var(--transition),
-    border-color var(--transition),
-    transform var(--transition);
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .spark-gallery-filter:hover {
-  border-color: var(--border-strong);
-  color: var(--text-primary);
-  transform: translateY(-1px);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
 }
 
 .spark-gallery-filter-active {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #ffffff;
 }
 
-.spark-gallery-filter-active:hover {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
+.spark-gallery-filter:active {
+  transform: scale(0.97);
 }
 
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
 
-.spark-gallery-empty {
-  padding: 4rem 1rem;
-  color: var(--text-muted);
-  text-align: center;
-}
-
-.spark-gallery-empty-icon {
-  margin-bottom: 0.7rem;
-  font-size: 2.25rem;
-  line-height: 1;
-}
-
-.spark-gallery-empty p {
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-/* =========================================================
-   GALLERY GRID
-   ========================================================= */
+/*  GALLERY GRID */
 
 .spark-gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
+  gap: 28px;
+  align-items: start;
 }
 
-/* =========================================================
-   GALLERY CARD
-   ========================================================= */
+
+/*  GALLERY CARD */
 
 .spark-gallery-card {
+  width: 100%;
   overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--bg-card);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
   transition:
-    transform var(--transition),
-    border-color var(--transition),
-    box-shadow var(--transition);
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .spark-gallery-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+  box-shadow:
+    0 12px 30px rgba(79, 70, 229, 0.12);
 }
 
-/* =========================================================
-   COVER
-   ========================================================= */
+
+/* COVER IMAGE */
 
 .spark-gallery-cover-wrap {
   position: relative;
-  overflow: hidden;
+  width: 100%;
   height: 220px;
+  overflow: hidden;
+  background: var(--hero-circle);
   cursor: pointer;
-  background: var(--bg-secondary);
 }
 
 .spark-gallery-cover {
-  display: block;
   width: 100%;
   height: 100%;
+  display: block;
   object-fit: cover;
   transition: transform 0.35s ease;
 }
 
-.spark-gallery-cover-wrap:hover .spark-gallery-cover {
-  transform: scale(1.035);
+.spark-gallery-card:hover .spark-gallery-cover {
+  transform: scale(1.03);
 }
+
+
+/*  MORE IMAGE COUNT */
 
 .spark-gallery-more-count {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
-  padding: 0.25rem 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-full);
-  background: rgba(0, 0, 0, 0.68);
-  backdrop-filter: blur(6px);
-  color: #fff;
-  font-size: 0.72rem;
+  right: 12px;
+  bottom: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  font-size: 0.75rem;
   font-weight: 600;
+  backdrop-filter: blur(4px);
 }
 
-/* =========================================================
-   CARD INFORMATION
-   ========================================================= */
+
+/*  CARD INFORMATION */
 
 .spark-gallery-card-info {
-  padding: 1rem 1.15rem 1.15rem;
+  padding: 18px 20px 20px;
 }
 
 .spark-gallery-card-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.6rem;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 .spark-gallery-card-title {
   min-width: 0;
   margin: 0;
   color: var(--text-primary);
-  font-size: 0.96rem;
-  line-height: 1.4;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .spark-gallery-chip {
   flex-shrink: 0;
-  padding: 0.2rem 0.5rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: var(--accent-bg);
-  color: var(--accent);
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--hero-circle);
+  color: var(--accent-color);
   font-size: 0.68rem;
   font-weight: 700;
-  line-height: 1.3;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
+
+
+/*  EVENT INFORMATION */
 
 .spark-gallery-event-name,
 .spark-gallery-event-date {
-  margin: 0.3rem 0 0;
-  color: var(--text-muted);
-  font-size: 0.78rem;
-  line-height: 1.45;
+  margin: 7px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.5;
 }
 
-/* =========================================================
-   THUMBNAILS
-   ========================================================= */
+
+/* THUMBNAILS */
 
 .spark-gallery-thumbs {
-  display: flex;
-  gap: 0.4rem;
-  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin-top: 16px;
 }
 
 .spark-gallery-thumb-button {
-  width: 46px;
-  height: 46px;
+  width: 100%;
+  height: 58px;
   padding: 0;
   overflow: hidden;
-  border: 2px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: var(--hero-circle);
   cursor: pointer;
   transition:
-    border-color var(--transition),
-    transform var(--transition);
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .spark-gallery-thumb-button:hover {
-  border-color: var(--accent);
+  border-color: var(--accent-color);
   transform: translateY(-2px);
 }
 
 .spark-gallery-thumb {
-  display: block;
   width: 100%;
   height: 100%;
+  display: block;
   object-fit: cover;
 }
 
-/* =========================================================
-   LIGHTBOX
-   ========================================================= */
 
-.spark-gallery-lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
+/*  EMPTY STATE */
+
+.spark-gallery-empty {
+  min-height: 280px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.92);
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: var(--card-bg);
 }
 
-.spark-gallery-lightbox-close,
-.spark-gallery-lightbox-prev,
-.spark-gallery-lightbox-next {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  cursor: pointer;
-  backdrop-filter: blur(6px);
-  transition:
-    background var(--transition),
-    transform var(--transition);
+.spark-gallery-empty-icon {
+  margin-bottom: 14px;
+  font-size: 2.2rem;
 }
 
-.spark-gallery-lightbox-close:hover,
-.spark-gallery-lightbox-prev:hover,
-.spark-gallery-lightbox-next:hover {
-  background: rgba(255, 255, 255, 0.18);
+.spark-gallery-empty p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
 }
 
-.spark-gallery-lightbox-close {
-  top: 20px;
-  right: 20px;
-  width: 42px;
-  height: 42px;
+
+/*  THEME VARIABLES */
+
+:root {
+  --hero-circle: #f0effc;
+  --section-bg: #f5f5fc;
+  --card-bg: #ffffff;
 }
 
-.spark-gallery-lightbox-prev,
-.spark-gallery-lightbox-next {
-  top: 50%;
-  width: 46px;
-  height: 46px;
-  transform: translateY(-50%);
+[data-theme="dark"] {
+  --hero-circle: #1a1d35;
+  --section-bg: #0b0d15;
+  --card-bg: #141724;
 }
 
-.spark-gallery-lightbox-prev:hover {
-  transform: translateY(-50%) translateX(-2px);
-}
 
-.spark-gallery-lightbox-next:hover {
-  transform: translateY(-50%) translateX(2px);
-}
+/*  RESPONSIVE */
 
-.spark-gallery-lightbox-prev {
-  left: 20px;
-}
+@media (max-width: 1100px) {
+  .spark-gallery-body {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
 
-.spark-gallery-lightbox-next {
-  right: 20px;
-}
-
-.spark-gallery-lightbox-img {
-  max-width: 90vw;
-  max-height: 85vh;
-  object-fit: contain;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-}
-
-.spark-gallery-lightbox-index {
-  position: absolute;
-  bottom: 20px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.85rem;
-}
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media (max-width: 1024px) {
   .spark-gallery-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 640px) {
+
+@media (max-width: 700px) {
   .spark-gallery-hero {
-    padding: 3rem 1rem 2.25rem;
+    min-height: 250px;
+    padding: 55px 20px;
+  }
+
+  .spark-gallery-hero-orb {
+    width: 250px;
+    height: 250px;
+    right: -100px;
+    top: -80px;
+  }
+
+  .spark-gallery-heading {
+    font-size: 2.4rem;
+  }
+
+  .spark-gallery-lede {
+    font-size: 0.95rem;
   }
 
   .spark-gallery-body {
-    padding: 2.25rem 1rem 3.5rem;
-  }
-
-  .spark-gallery-filters {
-    gap: 0.4rem;
-  }
-
-  .spark-gallery-filter {
-    padding: 0.48rem 0.8rem;
-    font-size: 0.78rem;
+    padding: 35px 5% 70px;
   }
 
   .spark-gallery-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .spark-gallery-cover-wrap {
-    height: 230px;
-  }
-
-  .spark-gallery-lightbox-prev {
-    left: 8px;
-  }
-
-  .spark-gallery-lightbox-next {
-    right: 8px;
-  }
-
-  .spark-gallery-lightbox-img {
-    max-width: 94vw;
-    max-height: 78vh;
+    gap: 22px;
   }
 }
 
-@media (max-width: 420px) {
+
+@media (max-width: 450px) {
+  .spark-gallery-heading {
+    font-size: 2.1rem;
+  }
+
+  .spark-gallery-lede {
+    font-size: 0.9rem;
+  }
+
+  .spark-gallery-filter {
+    padding: 0 14px;
+  }
+
+  .spark-gallery-cover-wrap {
+    height: 200px;
+  }
+
   .spark-gallery-card-top {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .spark-gallery-chip {
-    order: -1;
-  }
-
-  .spark-gallery-cover-wrap {
-    height: 210px;
-  }
 }
+

@@ -1,102 +1,72 @@
-/* =========================================================
-   ABOUT PAGE
-   All classes are scoped specifically to AboutUs.
-   ========================================================= */
+/*  ABOUT PAGE
+   All classes are scoped specifically to AboutUs. */
 
 .about-page {
   width: 100%;
   min-height: 100%;
   overflow: hidden;
-
   background: var(--about-page-bg);
   color: var(--about-page-text);
-
   transition:
     background-color 0.25s ease,
     color 0.25s ease;
 }
 
-/* =========================================================
-   HERO
-   ========================================================= */
+/* HERO */
 
 .about-page-hero {
   position: relative;
   overflow: hidden;
-
   padding: 72px 24px 64px;
-
   background: var(--about-page-hero-bg);
   border-bottom: 1px solid var(--about-page-border);
-
   text-align: center;
 }
 
 .about-page-hero-inner {
   position: relative;
   z-index: 2;
-
   width: 100%;
   max-width: 720px;
-
   margin: 0 auto;
 }
 
 .about-page-hero-orb {
   position: absolute;
-
   width: 360px;
   height: 360px;
-
   top: -190px;
   left: 50%;
-
   transform: translateX(-50%);
-
   border-radius: 50%;
-
   background: var(--about-page-orb);
-
   filter: blur(70px);
   opacity: 0.35;
-
   pointer-events: none;
 }
 
-/* =========================================================
-   KICKER
-   ========================================================= */
+/* KICKER */
 
 .about-page-kicker {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   gap: 7px;
-
   margin-bottom: 12px;
-
   color: var(--about-page-accent);
-
   font-size: 0.76rem;
   font-weight: 700;
-
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-/* =========================================================
-   HERO HEADING
-   ========================================================= */
+/*  HERO HEADING */
 
 .about-page-heading {
   margin: 0 0 18px;
-
   color: var(--about-page-heading);
-
   font-size: clamp(2rem, 4.5vw, 3rem);
   font-weight: 800;
-
   line-height: 1.15;
   letter-spacing: -0.035em;
 }
@@ -107,39 +77,27 @@
 
 .about-page-intro {
   max-width: 680px;
-
   margin: 0 auto;
-
   color: var(--about-page-text-secondary);
-
   font-size: 1.05rem;
   line-height: 1.8;
 }
 
-/* =========================================================
-   MISSION
-   ========================================================= */
+/* MISSION */
 
 .about-page-mission {
   padding: 72px 24px;
-
   background: var(--about-page-section-bg);
-
   border-bottom: 1px solid var(--about-page-border);
 }
 
 .about-page-mission-inner {
   width: 100%;
   max-width: 1180px;
-
   margin: 0 auto;
-
   display: grid;
-
   grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
-
   gap: 64px;
-
   align-items: center;
 }
 
@@ -153,23 +111,17 @@
 
 .about-page-mission-heading {
   margin: 8px 0 20px;
-
   color: var(--about-page-heading);
-
   font-size: clamp(1.7rem, 3vw, 2.35rem);
   font-weight: 800;
-
   line-height: 1.2;
   letter-spacing: -0.025em;
 }
 
 .about-page-mission-copy p {
   max-width: 680px;
-
   margin: 0 0 16px;
-
   color: var(--about-page-text-secondary);
-
   font-size: 0.94rem;
   line-height: 1.85;
 }
@@ -178,38 +130,26 @@
   margin-bottom: 0;
 }
 
-/* =========================================================
-   FACTS
-   ========================================================= */
+/* FACTS */
 
 .about-page-facts {
   display: grid;
-
   grid-template-columns: repeat(2, minmax(0, 1fr));
-
   gap: 14px;
 }
 
 .about-page-fact {
   min-height: 130px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   padding: 20px 14px;
-
   background: var(--about-page-card-bg);
-
   border: 1px solid var(--about-page-border);
-
   border-radius: 14px;
-
   box-shadow: var(--about-page-card-shadow);
-
   text-align: center;
-
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -218,48 +158,38 @@
 
 .about-page-fact:hover {
   transform: translateY(-3px);
-
   border-color: var(--about-page-accent-border);
 }
 
 .about-page-fact-value {
   color: var(--about-page-accent);
-
   font-size: 1.85rem;
   font-weight: 800;
-
   line-height: 1.1;
 }
 
 .about-page-fact-label {
   margin-top: 7px;
-
   color: var(--about-page-text-muted);
-
   font-size: 0.8rem;
   font-weight: 600;
 }
 
-/* =========================================================
-   VALUES
-   ========================================================= */
+/* VALUES */
 
 .about-page-values {
   padding: 72px 24px 80px;
-
   background: var(--about-page-values-bg);
 }
 
 .about-page-values-inner {
   width: 100%;
   max-width: 1180px;
-
   margin: 0 auto;
 }
 
 .about-page-values-intro {
   margin-bottom: 36px;
-
   text-align: center;
 }
 
@@ -269,46 +199,31 @@
 
 .about-page-values-heading {
   margin: 0;
-
   color: var(--about-page-heading);
-
   font-size: clamp(1.7rem, 3vw, 2.25rem);
   font-weight: 800;
-
   line-height: 1.2;
   letter-spacing: -0.025em;
 }
 
-/* =========================================================
-   VALUE GRID
-   ========================================================= */
+/*   VALUE GRID */
 
 .about-page-values-grid {
   display: grid;
-
   grid-template-columns: repeat(2, minmax(0, 1fr));
-
   gap: 16px;
 }
 
 .about-page-value-card {
   display: flex;
   align-items: flex-start;
-
   gap: 18px;
-
   min-width: 0;
-
   padding: 22px;
-
   background: var(--about-page-card-bg);
-
   border: 1px solid var(--about-page-border);
-
   border-radius: 14px;
-
   box-shadow: var(--about-page-card-shadow);
-
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -317,20 +232,16 @@
 
 .about-page-value-card:hover {
   transform: translateY(-3px);
-
   border-color: var(--about-page-accent-border);
 }
 
 .about-page-value-icon {
   width: 48px;
   height: 48px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex: 0 0 48px;
-
   border-radius: 11px;
 }
 
@@ -362,52 +273,38 @@
 
 .about-page-value-title {
   margin: 1px 0 7px;
-
   color: var(--about-page-heading);
-
   font-size: 1rem;
   font-weight: 700;
 }
 
 .about-page-value-desc {
   margin: 0;
-
   color: var(--about-page-text-secondary);
-
   font-size: 0.88rem;
   line-height: 1.7;
 }
 
-/* =========================================================
-   LIGHT THEME
-   ========================================================= */
+/*  LIGHT THEME */
 
 :root {
   --about-page-bg: #ffffff;
   --about-page-hero-bg: #ffffff;
   --about-page-section-bg: #f8f9fc;
   --about-page-values-bg: #ffffff;
-
   --about-page-card-bg: #ffffff;
-
   --about-page-heading: #111827;
   --about-page-text: #1f2937;
   --about-page-text-secondary: #64748b;
   --about-page-text-muted: #7c8799;
-
   --about-page-border: #e5e7eb;
-
   --about-page-accent: #4f46e5;
   --about-page-accent-border: rgba(79, 70, 229, 0.28);
-
   --about-page-orb: #818cf8;
-
   --about-page-card-shadow: 0 6px 24px rgba(15, 23, 42, 0.045);
 }
 
-/* =========================================================
-   DARK THEME
-   ========================================================= */
+/* DARK THEME */
 
 html[data-theme="dark"],
 body[data-theme="dark"],
@@ -417,32 +314,23 @@ body.dark {
   --about-page-hero-bg: #0d0f1b;
   --about-page-section-bg: #10121f;
   --about-page-values-bg: #0a0c16;
-
   --about-page-card-bg: #131624;
-
   --about-page-heading: #f8fafc;
   --about-page-text: #e5e7eb;
   --about-page-text-secondary: #a8b0c2;
   --about-page-text-muted: #7f889b;
-
   --about-page-border: #292d3d;
-
   --about-page-accent: #818cf8;
   --about-page-accent-border: rgba(129, 140, 248, 0.35);
-
   --about-page-orb: #4f46e5;
-
   --about-page-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
 }
 
-/* =========================================================
-   TABLET
-   ========================================================= */
+/* TABLET */
 
 @media (max-width: 860px) {
   .about-page-mission-inner {
     grid-template-columns: 1fr;
-
     gap: 42px;
   }
 
@@ -456,15 +344,12 @@ body.dark {
 
   .about-page-mission-copy p {
     max-width: 720px;
-
     margin-left: auto;
     margin-right: auto;
   }
 }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+/*  MOBILE */
 
 @media (max-width: 680px) {
   .about-page-hero {
@@ -501,9 +386,7 @@ body.dark {
   }
 }
 
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
+/* SMALL MOBILE */
 
 @media (max-width: 420px) {
   .about-page-hero {
@@ -528,7 +411,6 @@ body.dark {
   .about-page-value-icon {
     width: 44px;
     height: 44px;
-
     flex-basis: 44px;
   }
 }

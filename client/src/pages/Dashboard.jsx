@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
-import DashboardSidebar from "../components/DashboardSidebar.jsx";
+import DashboardSidebar from "../components/common/DashboardSidebar.jsx";
 import "./Dashboard.css";
 
 export default function Dashboard() {

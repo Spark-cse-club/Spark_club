@@ -1,60 +1,86 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  FiAward,
-  FiCalendar,
-  FiExternalLink,
-  FiUser,
-} from "react-icons/fi";
+import { FiAward } from "react-icons/fi";
+
 import { getAchievements } from "../api/api.js";
-import Loader from "../components/Loader.jsx";
+import Loader from "../components/common/Loader.jsx";
+import AchievementCard from "../components/Achievement/AchievementCard.jsx";
+import AchievementModal from "../components/Achievement/AchievementModal.jsx";
+
 import "./Achievements.css";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: {
+    opacity: 0,
+    y: 24,
+  },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5 },
+    transition: {
+      duration: 0.5,
+    },
   },
 };
+
+const categories = [
+  "all",
+  "placement",
+  "competition",
+  "hackathon",
+  "exam",
+  "internship",
+  "certification",
+  "award",
+  "other",
+];
+
+const formatCategory = (category) =>
+  category === "all"
+    ? "All"
+    : category
+        .split("_")
+        .map(
+          (word) =>
+            word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join(" ");
 
 export default function Achievements() {
   const [achievements, setAchievements] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [selectedAchievement, setSelectedAchievement] =
+    useState(null);
 
   useEffect(() => {
-    getAchievements()
-      .then((res) => setAchievements(res?.data || []))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    const fetchAchievements = async () => {
+      try {
+        const response = await getAchievements();
+
+        setAchievements(response?.data || []);
+      } catch (error) {
+        console.error(
+          "Failed to fetch achievements:",
+          error
+        );
+
+        setAchievements([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAchievements();
   }, []);
 
-  const categories = [
-    "all",
-    "placement",
-    "competition",
-    "hackathon",
-    "exam",
-    "internship",
-    "certification",
-    "award",
-    "other",
-  ];
-
-  const filtered =
+  const filteredAchievements =
     filter === "all"
       ? achievements
-      : achievements.filter((achievement) => achievement.category === filter);
-
-  const formatCategory = (category) =>
-    category === "all"
-      ? "All"
-      : category
-          .split("_")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ");
+      : achievements.filter(
+          (achievement) =>
+            achievement.category === filter
+        );
 
   if (loading) {
     return <Loader />;
@@ -72,7 +98,9 @@ export default function Achievements() {
             animate="show"
             variants={{
               show: {
-                transition: { staggerChildren: 0.1 },
+                transition: {
+                  staggerChildren: 0.1,
+                },
               },
             }}
           >
@@ -97,8 +125,8 @@ export default function Achievements() {
               variants={fadeUp}
               className="spark-achievements-lede"
             >
-              Celebrating the milestones and victories of our talented
-              members.
+              Celebrating the milestones and victories of our
+              talented members.
             </motion.p>
           </motion.div>
         </div>
@@ -126,7 +154,7 @@ export default function Achievements() {
           </div>
 
           {/* Empty State */}
-          {filtered.length === 0 ? (
+          {filteredAchievements.length === 0 ? (
             <div className="spark-achievements-empty">
               <div className="spark-achievements-empty-icon">
                 <FiAward size={30} />
@@ -140,122 +168,38 @@ export default function Achievements() {
               animate="show"
               variants={{
                 show: {
-                  transition: { staggerChildren: 0.08 },
+                  transition: {
+                    staggerChildren: 0.08,
+                  },
                 },
               }}
               className="spark-achievements-grid"
             >
-              {filtered.map((achievement) => {
-                const imageCount = achievement.images?.length || 0;
-
-                return (
-                  <motion.article
-                    key={achievement._id}
-                    variants={fadeUp}
-                    className="spark-achievements-card"
-                  >
-                    {/* Images */}
-                    {imageCount > 0 && (
-                      <div
-                        className={`spark-achievements-photos ${
-                          imageCount === 1
-                            ? "spark-achievements-photos-one"
-                            : "spark-achievements-photos-two"
-                        }`}
-                      >
-                        {achievement.images
-                          .slice(0, imageCount === 3 ? 3 : 4)
-                          .map((image, index) => (
-                            <img
-                              key={index}
-                              src={image.url}
-                              alt=""
-                              className={`spark-achievements-photo ${
-                                imageCount === 1
-                                  ? "spark-achievements-photo-tall"
-                                  : ""
-                              } ${
-                                imageCount === 3 && index === 0
-                                  ? "spark-achievements-photo-span"
-                                  : ""
-                              }`}
-                            />
-                          ))}
-                      </div>
-                    )}
-
-                    {/* Meta */}
-                    <div className="spark-achievements-meta">
-                      <span className="spark-achievements-chip">
-                        {formatCategory(achievement.category)}
-                      </span>
-
-                      {achievement.rank && (
-                        <span className="spark-achievements-chip spark-achievements-chip-rank">
-                          🏅 {achievement.rank}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Content */}
-                    <h3 className="spark-achievements-card-title">
-                      {achievement.title}
-                    </h3>
-
-                    <p className="spark-achievements-card-desc">
-                      {achievement.description}
-                    </p>
-
-                    {/* Facts */}
-                    <div className="spark-achievements-facts">
-                      {achievement.personName && (
-                        <span className="spark-achievements-fact">
-                          <FiUser size={13} />
-                          {achievement.personName}
-                        </span>
-                      )}
-
-                      {achievement.teamName && (
-                        <span className="spark-achievements-fact">
-                          <span aria-hidden="true">👥</span>
-                          {achievement.teamName}
-                        </span>
-                      )}
-
-                      {achievement.organization && (
-                        <span className="spark-achievements-fact">
-                          <span aria-hidden="true">🏢</span>
-                          {achievement.organization}
-                        </span>
-                      )}
-
-                      <span className="spark-achievements-fact">
-                        <FiCalendar size={13} />
-                        {new Date(
-                          achievement.achievementDate
-                        ).toLocaleDateString()}
-                      </span>
-                    </div>
-
-                    {/* External Link */}
-                    {achievement.link && (
-                      <a
-                        href={achievement.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="spark-achievements-link"
-                      >
-                        View more
-                        <FiExternalLink size={13} />
-                      </a>
-                    )}
-                  </motion.article>
-                );
-              })}
+              {filteredAchievements.map((achievement) => (
+                <motion.div
+                  key={achievement._id}
+                  variants={fadeUp}
+                >
+                  <AchievementCard
+                    achievement={achievement}
+                    onViewDetails={() =>
+                      setSelectedAchievement(achievement)
+                    }
+                  />
+                </motion.div>
+              ))}
             </motion.div>
           )}
         </div>
       </section>
+
+      {/* Details Modal */}
+      {selectedAchievement && (
+        <AchievementModal
+          achievement={selectedAchievement}
+          onClose={() => setSelectedAchievement(null)}
+        />
+      )}
     </div>
   );
 }

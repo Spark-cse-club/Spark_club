@@ -97,7 +97,7 @@ export default function Login() {
             </h1>
 
             <p className="spark-login-subtitle">
-              Sign in Only For <strong>Core Team</strong> of Club
+              Sign in Only For <strong>Core Team</strong> of Spark Club
             </p>
           </div>
 

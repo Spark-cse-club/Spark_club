@@ -1,36 +1,59 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FiCode, FiGithub, FiCalendar } from "react-icons/fi";
+import { FiCode } from "react-icons/fi";
+
 import { getProjects } from "../api/api.js";
-import Loader from "../components/Loader.jsx";
+import Loader from "../components/common/Loader.jsx";
+import ProjectCard from "../components/Project/ProjectCard.jsx";
+import ProjectModal from "../components/Project/ProjectModal.jsx";
 
 import "./Projects.css";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: {
+    opacity: 0,
+    y: 24,
+  },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5 },
+    transition: {
+      duration: 0.5,
+    },
   },
 };
+
+const categories = ["all", "software", "hardware"];
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
-    getProjects()
-      .then((res) => setProjects(res?.data || []))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    const fetchProjects = async () => {
+      try {
+        const response = await getProjects();
+
+        setProjects(response?.data || []);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+        setProjects([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
   }, []);
 
   const filteredProjects =
     filter === "all"
       ? projects
-      : projects.filter((project) => project.category === filter);
+      : projects.filter(
+          (project) => project.category === filter
+        );
 
   if (loading) {
     return <Loader />;
@@ -38,10 +61,7 @@ export default function Projects() {
 
   return (
     <main className="spark-projects-page">
-
-      {/* =========================
-          HERO
-      ========================== */}
+      {/* HERO */}
       <section className="spark-projects-hero">
         <div className="spark-projects-hero-orb" />
 
@@ -85,15 +105,12 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* =========================
-          PROJECTS
-      ========================== */}
+      {/* PROJECTS */}
       <section className="spark-projects-body">
         <div className="spark-projects-inner">
-
-          {/* Filters */}
+          {/* FILTERS */}
           <div className="spark-projects-filters">
-            {["all", "software", "hardware"].map((category) => (
+            {categories.map((category) => (
               <button
                 key={category}
                 type="button"
@@ -112,11 +129,11 @@ export default function Projects() {
             ))}
           </div>
 
-          {/* Empty State */}
+          {/* EMPTY STATE */}
           {filteredProjects.length === 0 ? (
             <div className="spark-projects-empty">
               <div className="spark-projects-empty-icon">
-                🔍
+                <FiCode size={30} />
               </div>
 
               <p>No projects found.</p>
@@ -135,78 +152,30 @@ export default function Projects() {
               }}
             >
               {filteredProjects.map((project) => (
-                <motion.article
+                <motion.div
                   key={project._id}
                   variants={fadeUp}
-                  className="spark-projects-card"
                 >
-                  {/* Image */}
-                  {project.image?.url ? (
-                    <img
-                      src={project.image.url}
-                      alt={project.projectName}
-                      className="spark-projects-cover"
-                    />
-                  ) : (
-                    <div className="spark-projects-cover-fallback">
-                      <FiCode size={40} />
-                    </div>
-                  )}
-
-                  {/* Content */}
-                  <div className="spark-projects-card-body">
-
-                    <span
-                      className={`spark-projects-chip ${
-                        project.category === "software"
-                          ? "spark-projects-chip-software"
-                          : "spark-projects-chip-hardware"
-                      }`}
-                    >
-                      {project.category}
-                    </span>
-
-                    <h2 className="spark-projects-card-title">
-                      {project.projectName}
-                    </h2>
-
-                    <p className="spark-projects-card-desc">
-                      {project.description}
-                    </p>
-
-                    {/* Footer */}
-                    <div className="spark-projects-footer-row">
-
-                      <span className="spark-projects-year">
-                        <FiCalendar size={13} />
-
-                        {project.startDate
-                          ? new Date(
-                              project.startDate
-                            ).getFullYear()
-                          : "—"}
-                      </span>
-
-                      {project.githubLink && (
-                        <a
-                          href={project.githubLink}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="spark-projects-github"
-                        >
-                          <FiGithub size={14} />
-                          GitHub
-                        </a>
-                      )}
-
-                    </div>
-                  </div>
-                </motion.article>
+                  <ProjectCard
+                    project={project}
+                    onViewDetails={() =>
+                      setSelectedProject(project)
+                    }
+                  />
+                </motion.div>
               ))}
             </motion.div>
           )}
         </div>
       </section>
+
+      {/* PROJECT DETAILS MODAL */}
+      {selectedProject && (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </main>
   );
 }

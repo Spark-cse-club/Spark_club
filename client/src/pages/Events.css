@@ -1,369 +1,310 @@
-/* =========================================================
-   EVENTS PAGE
-   ========================================================= */
+/*  EVENTS PAGE */
 
-.spark-events-page {
-  width: 100%;
-  min-height: 100%;
+.events-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-/* =========================================================
-   HERO
-   ========================================================= */
 
-.spark-events-hero {
+/* HERO */
+
+.events-hero {
   position: relative;
+  min-height: 278px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
   overflow: hidden;
-  padding: 3.5rem 1.25rem 2.5rem;
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-color);
 }
 
-.spark-events-hero-orb {
+/* Background circle like existing design */
+.events-hero::after {
+  content: "";
   position: absolute;
-  top: -150px;
-  right: -100px;
-  width: 360px;
-  height: 360px;
+  width: 330px;
+  height: 330px;
+  right: -60px;
+  top: -95px;
   border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.07;
+  background: var(--hero-circle);
   pointer-events: none;
 }
 
-.spark-events-hero-inner {
+.events-hero-content {
   position: relative;
   z-index: 1;
-  width: min(100%, 1180px);
-  margin: 0 auto;
+  width: 100%;
+  max-width: 760px;
   text-align: center;
 }
 
-.spark-events-kicker {
+.events-hero .section-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  margin-bottom: 0.8rem;
-  color: var(--accent);
-  font-size: 0.75rem;
-  font-weight: 700;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: var(--accent-color);
+  font-size: 0.85rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.spark-events-heading {
-  margin: 0 0 0.7rem;
-  font-size: clamp(1.9rem, 4vw, 2.65rem);
-  line-height: 1.15;
+.events-hero h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
-.spark-events-heading-accent {
-  color: var(--accent);
+.events-hero h1 span {
+  color: var(--accent-color);
 }
 
-.spark-events-lede {
-  max-width: 520px;
-  margin: 0 auto;
+.events-hero p {
+  max-width: 650px;
+  margin: 18px auto 0;
   color: var(--text-secondary);
-  font-size: 1.02rem;
-  line-height: 1.7;
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
-/* =========================================================
-   BODY
-   ========================================================= */
 
-.spark-events-body {
-  padding: 2.75rem 1.25rem 4.5rem;
-  background: var(--bg-primary);
+/*  EVENTS CONTENT */
+
+.events-section {
+  width: 100%;
+  padding: 50px max(7.5%, 40px) 90px;
+  background: var(--section-bg);
 }
 
-.spark-events-inner {
-  width: min(100%, 1180px);
-  margin: 0 auto;
+
+/*
+  Your current JSX has "Browse Events / All Events"
+  in events-header.
+
+  Screenshot doesn't show that heading,
+  so only the filters are displayed.
+*/
+.events-header {
+  margin-bottom: 36px;
 }
 
-/* =========================================================
-   FILTERS
-   ========================================================= */
+.events-header > div:first-child {
+  display: none;
+}
 
-.spark-events-filters {
+
+/*  FILTER BUTTONS */
+
+.events-filters {
   display: flex;
+  align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.9rem;
+  justify-content: flex-start;
 }
 
-.spark-events-filter {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--bg-secondary);
+.event-filter {
+  height: 38px;
+  padding: 0 19px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-bg);
   color: var(--text-secondary);
-  font-size: 0.82rem;
+  font-family: inherit;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition:
-    background var(--transition),
-    color var(--transition),
-    border-color var(--transition),
-    transform var(--transition);
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.spark-events-filter:hover {
-  border-color: var(--border-strong);
-  color: var(--text-primary);
-  transform: translateY(-1px);
+.event-filter:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
 }
 
-.spark-events-filter-active {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
+.event-filter.active {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #ffffff;
 }
 
-.spark-events-filter-active:hover {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
+.event-filter:active {
+  transform: scale(0.97);
 }
 
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
 
-.spark-events-empty {
-  padding: 4rem 1rem;
-  color: var(--text-muted);
-  text-align: center;
-}
+/* EVENTS GRID */
 
-.spark-events-empty-icon {
-  margin-bottom: 0.7rem;
-  font-size: 2.25rem;
-  line-height: 1;
-}
-
-.spark-events-empty p {
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-/* =========================================================
-   GRID
-   ========================================================= */
-
-.spark-events-grid {
+.events-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
+  gap: 28px;
+  align-items: start;
 }
 
-/* =========================================================
-   CARD
-   ========================================================= */
 
-.spark-events-card {
+/*  EMPTY STATE */
+
+.events-empty {
+  min-height: 280px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--bg-card);
-  transition:
-    transform var(--transition),
-    border-color var(--transition),
-    box-shadow var(--transition);
-}
-
-.spark-events-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-md);
-}
-
-/* =========================================================
-   POSTER
-   ========================================================= */
-
-.spark-events-poster,
-.spark-events-poster-fallback {
-  width: 100%;
-  height: 180px;
-}
-
-.spark-events-poster {
-  display: block;
-  object-fit: cover;
-}
-
-.spark-events-poster-fallback {
-  display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-bg);
-  color: var(--accent);
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: var(--card-bg);
 }
 
-/* =========================================================
-   CARD BODY
-   ========================================================= */
-
-.spark-events-card-body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 1.15rem 1.15rem 1.25rem;
+.events-empty svg {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 16px;
+  color: var(--accent-color);
 }
 
-.spark-events-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 0.7rem;
+.events-empty h3 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
 }
 
-.spark-events-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.22rem 0.55rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: var(--accent-bg);
-  color: var(--accent);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-
-.spark-events-chip-past {
-  background: var(--bg-tertiary);
-  color: var(--text-muted);
-}
-
-/* =========================================================
-   TEXT
-   ========================================================= */
-
-.spark-events-card-title {
-  margin: 0 0 0.45rem;
-  color: var(--text-primary);
-  font-size: 1.02rem;
-  line-height: 1.4;
-}
-
-.spark-events-card-desc {
-  display: -webkit-box;
-  margin: 0 0 0.9rem;
-  overflow: hidden;
+.events-empty p {
+  margin: 0;
   color: var(--text-secondary);
-  font-size: 0.86rem;
-  line-height: 1.55;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  font-size: 0.95rem;
 }
 
-/* =========================================================
-   EVENT DETAILS
-   ========================================================= */
 
-.spark-events-details {
+/*  LOADING */
+
+.events-loading {
+  min-height: calc(100vh - 82px);
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  margin-top: auto;
-  color: var(--text-muted);
-  font-size: 0.82rem;
-}
-
-.spark-events-detail-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.45rem;
-  line-height: 1.45;
-}
-
-.spark-events-detail-row svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-/* =========================================================
-   REGISTER
-   ========================================================= */
-
-.spark-events-register {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0.55rem 0.8rem;
-  border: 1px solid var(--accent);
-  border-radius: var(--radius-md);
-  background: var(--accent);
-  color: #fff;
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    background var(--transition),
-    transform var(--transition),
-    box-shadow var(--transition);
+  gap: 14px;
+  color: var(--text-secondary);
 }
 
-.spark-events-register:hover {
-  background: var(--accent-hover, var(--accent));
-  color: #fff;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+.events-loading p {
+  margin: 0;
+  font-size: 0.95rem;
 }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+.events-loader {
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: events-spin 0.8s linear infinite;
+}
 
-@media (max-width: 1024px) {
-  .spark-events-grid {
+@keyframes events-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/*  LIGHT / DARK THEME FALLBACKS */
+
+:root {
+  --hero-circle: #f0effc;
+  --section-bg: #f5f5fc;
+  --card-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --hero-circle: #1a1d35;
+  --section-bg: #0b0d15;
+  --card-bg: #141724;
+}
+
+
+/*  RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .events-section {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+  .events-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 640px) {
-  .spark-events-hero {
-    padding: 3rem 1rem 2.25rem;
+
+@media (max-width: 700px) {
+  .events-hero {
+    min-height: 250px;
+    padding: 55px 20px;
   }
 
-  .spark-events-body {
-    padding: 2.25rem 1rem 3.5rem;
+  .events-hero::after {
+    width: 250px;
+    height: 250px;
+    right: -100px;
+    top: -80px;
   }
 
-  .spark-events-grid {
+  .events-hero h1 {
+    font-size: 2.4rem;
+  }
+
+  .events-hero p {
+    font-size: 0.95rem;
+  }
+
+  .events-section {
+    padding: 35px 5% 70px;
+  }
+
+  .events-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 22px;
   }
 
-  .spark-events-poster,
-  .spark-events-poster-fallback {
-    height: 210px;
+  .events-filters {
+    gap: 8px;
+  }
+
+  .event-filter {
+    height: 37px;
+    padding: 0 15px;
+    font-size: 0.85rem;
   }
 }
+
 
 @media (max-width: 420px) {
-  .spark-events-filters {
-    gap: 0.4rem;
+  .events-hero h1 {
+    font-size: 2.1rem;
   }
 
-  .spark-events-filter {
-    padding: 0.48rem 0.8rem;
-    font-size: 0.78rem;
+  .events-hero p {
+    font-size: 0.9rem;
   }
 
-  .spark-events-card-body {
-    padding: 1rem;
+  .events-filters {
+    display: flex;
+    width: 100%;
+  }
+
+  .event-filter {
+    padding: 0 13px;
   }
 }
-

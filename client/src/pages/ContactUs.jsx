@@ -33,12 +33,12 @@ const contactPageInfo = [
   {
     icon: <FiPhone />,
     label: "Phone",
-    value: "+91 XXXXXXXXXX",
+    value: "+91 8317283429",
   },
   {
     icon: <FiMapPin />,
     label: "Location",
-    value: "CSE Department, College Campus",
+    value: "SGGSIE&T College Vishnupuri, Nanded",
   },
 ];
 

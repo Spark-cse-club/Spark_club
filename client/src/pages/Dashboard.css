@@ -17,9 +17,7 @@
   width: 100%;
 }
 
-/* =========================
-   MOBILE HEADER
-========================= */
+/* MOBILE HEADER */
 
 .spark-dashboard-mobile-header {
   display: none;
@@ -59,9 +57,7 @@
   font-weight: 700;
 }
 
-/* =========================
-   MOBILE OVERLAY
-========================= */
+/*  MOBILE OVERLAY */
 
 .spark-dashboard-overlay {
   position: fixed;
@@ -70,9 +66,7 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* RESPONSIVE */
 
 @media (max-width: 768px) {
   .spark-dashboard-content {
@@ -93,4 +87,3 @@
     margin-bottom: 1.1rem;
   }
 }
-

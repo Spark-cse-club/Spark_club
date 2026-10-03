@@ -1,219 +1,149 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import {
-  FiCalendar,
-  FiMapPin,
-  FiExternalLink,
-} from "react-icons/fi";
+import { FiCalendar, FiFilter, FiMapPin } from "react-icons/fi";
 import { getEvents } from "../api/api.js";
-import Loader from "../components/Loader.jsx";
+
+import EventCard from "../components/Events/EventCard.jsx";
+import EventModal from "../components/Events/EventModal.jsx";
+
 import "./Events.css";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 },
-  },
+const categories = [
+  { value: "all", label: "All Events" },
+  { value: "dsa", label: "DSA" },
+  { value: "aptitude", label: "Aptitude" },
+  { value: "other", label: "Other" },
+];
+
+const getEventStatus = (event) => {
+  const now = new Date();
+  const start = new Date(event.startDate);
+  const end = new Date(event.endDate);
+
+  if (now < start) return "upcoming";
+  if (now <= end) return "ongoing";
+  return "completed";
 };
 
-export default function Events() {
+const Events = () => {
   const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getEvents()
-      .then((res) => setEvents(res?.data || []))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    const fetchEvents = async () => {
+      try {
+        const response = await getEvents();
+        setEvents(response?.data || []);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+        setEvents([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
   }, []);
 
-  const filters = ["all", "dsa", "aptitude", "other"];
-
-  const filtered =
+  const filteredEvents =
     filter === "all"
       ? events
       : events.filter((event) => event.category === filter);
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <main className="events-page">
+        <section className="events-loading">
+          <div className="events-loader"></div>
+          <p>Loading events...</p>
+        </section>
+      </main>
+    );
+  }
 
   return (
-    <div className="spark-events-page">
+    <main className="events-page">
       {/* Hero */}
-      <section className="spark-events-hero">
-        <div className="spark-events-hero-orb" />
+      <section className="events-hero">
+        <div className="events-hero-content">
+          <span className="section-label">
+            <FiCalendar />
+            Spark Club Events
+          </span>
 
-        <div className="spark-events-hero-inner">
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={{
-              show: {
-                transition: { staggerChildren: 0.1 },
-              },
-            }}
-          >
-            <motion.div variants={fadeUp}>
-              <span className="spark-events-kicker">
-                <FiCalendar size={12} />
-                Events
-              </span>
-            </motion.div>
+          <h1>
+            Explore Our <span>Events</span>
+          </h1>
 
-            <motion.h1
-              variants={fadeUp}
-              className="spark-events-heading"
-            >
-              Club{" "}
-              <span className="spark-events-heading-accent">
-                Events
-              </span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              className="spark-events-lede"
-            >
-              Workshops, hackathons, and coding competitions designed
-              to push your limits.
-            </motion.p>
-          </motion.div>
+          <p>
+            Discover upcoming workshops, competitions, DSA sessions,
+            aptitude activities, and other events organized by Spark Club.
+          </p>
         </div>
       </section>
 
-      {/* Events Content */}
-      <section className="spark-events-body">
-        <div className="spark-events-inner">
-          {/* Filters */}
-          <div className="spark-events-filters">
-            {filters.map((category) => (
+      {/* Filters */}
+      <section className="events-section">
+        <div className="events-header">
+          <div>
+            <span className="section-label">
+              <FiFilter />
+              Browse Events
+            </span>
+
+            <h2>All Events</h2>
+          </div>
+
+          <div className="events-filters">
+            {categories.map((category) => (
               <button
-                key={category}
+                key={category.value}
                 type="button"
-                className={`spark-events-filter ${
-                  filter === category
-                    ? "spark-events-filter-active"
-                    : ""
+                className={`event-filter ${
+                  filter === category.value ? "active" : ""
                 }`}
-                onClick={() => setFilter(category)}
+                onClick={() => setFilter(category.value)}
               >
-                {category === "all"
-                  ? "All Events"
-                  : category.toUpperCase()}
+                {category.label}
               </button>
             ))}
           </div>
-
-          {/* Empty State */}
-          {filtered.length === 0 ? (
-            <div className="spark-events-empty">
-              <div className="spark-events-empty-icon">📭</div>
-              <p>No events found.</p>
-            </div>
-          ) : (
-            <motion.div
-              initial="hidden"
-              animate="show"
-              variants={{
-                show: {
-                  transition: { staggerChildren: 0.08 },
-                },
-              }}
-              className="spark-events-grid"
-            >
-              {filtered.map((event) => {
-                const isPast =
-                  new Date(event.endDate) < new Date();
-
-                return (
-                  <motion.article
-                    key={event._id}
-                    variants={fadeUp}
-                    className="spark-events-card"
-                  >
-                    {/* Poster */}
-                    {event.poster?.url ? (
-                      <img
-                        src={event.poster.url}
-                        alt={event.title}
-                        className="spark-events-poster"
-                      />
-                    ) : (
-                      <div className="spark-events-poster-fallback">
-                        <FiCalendar size={40} />
-                      </div>
-                    )}
-
-                    <div className="spark-events-card-body">
-                      {/* Category + Status */}
-                      <div className="spark-events-meta">
-                        <span className="spark-events-chip">
-                          {event.category}
-                        </span>
-
-                        {isPast && (
-                          <span className="spark-events-chip spark-events-chip-past">
-                            Past
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="spark-events-card-title">
-                        {event.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p className="spark-events-card-desc">
-                        {event.description}
-                      </p>
-
-                      {/* Details */}
-                      <div className="spark-events-details">
-                        <span className="spark-events-detail-row">
-                          <FiCalendar size={13} />
-                          <span>
-                            {new Date(
-                              event.startDate
-                            ).toLocaleDateString()}{" "}
-                            —{" "}
-                            {new Date(
-                              event.endDate
-                            ).toLocaleDateString()}
-                          </span>
-                        </span>
-
-                        <span className="spark-events-detail-row">
-                          <FiMapPin size={13} />
-                          <span>{event.venue}</span>
-                        </span>
-                      </div>
-
-                      {/* Registration */}
-                      {event.registrationLink && !isPast && (
-                        <a
-                          href={event.registrationLink}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="spark-events-register"
-                        >
-                          Register
-                          <FiExternalLink size={13} />
-                        </a>
-                      )}
-                    </div>
-                  </motion.article>
-                );
-              })}
-            </motion.div>
-          )}
         </div>
+
+        {/* Events */}
+        {filteredEvents.length === 0 ? (
+          <div className="events-empty">
+            <FiCalendar />
+            <h3>No events found</h3>
+            <p>
+              There are currently no events available in this category.
+            </p>
+          </div>
+        ) : (
+          <div className="events-grid">
+            {filteredEvents.map((event) => (
+              <EventCard
+                key={event._id}
+                event={event}
+                status={getEventStatus(event)}
+                onViewDetails={() => setSelectedEvent(event)}
+              />
+            ))}
+          </div>
+        )}
       </section>
-    </div>
+
+      {/* Event Details Modal */}
+      {selectedEvent && (
+        <EventModal
+          event={selectedEvent}
+          status={getEventStatus(selectedEvent)}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
+    </main>
   );
-}
+};
 
-
-
+export default Events;
