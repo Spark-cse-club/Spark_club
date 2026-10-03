@@ -1,128 +1,223 @@
-import { useState, useEffect } from "react";
-import { FiPlus, FiEdit2, FiTrash2, FiImage } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import {
+  FiEdit2,
+  FiImage,
+  FiPlus,
+  FiTrash2,
+} from "react-icons/fi";
 import { toast } from "react-toastify";
+
 import {
   getGallery,
   createGallery,
   updateGallery,
   deleteGallery,
 } from "../api/api.js";
-import Modal from "../components/Modal.jsx";
-import ConfirmDialog from "../components/ConfirmDialog.jsx";
-import ImageUpload from "../components/ImageUpload.jsx";
-import Loader from "../components/Loader.jsx";
+
+import Modal from "../components/common/Modal.jsx";
+import ConfirmDialog from "../components/common/ConfirmDialog.jsx";
+import ImageUpload from "../components/common/ImageUpload.jsx";
+import Loader from "../components/common/Loader.jsx";
+
+import "./GalleryManager.css";
+
+const categories = [
+  "event",
+  "workshop",
+  "hackathon",
+  "competition",
+  "celebration",
+  "other",
+];
+
+const initialFormData = {
+  title: "",
+  description: "",
+  category: "event",
+  eventName: "",
+  eventDate: "",
+  images: [],
+};
 
 export default function GalleryManager() {
-  const [galleries, setGalleries] = useState([]);
+  const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [currentGallery, setCurrentGallery] = useState(null);
 
-  // Form state
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    category: "event",
-    eventName: "",
-    eventDate: "",
-    images: [],
-  });
+  const [formData, setFormData] = useState(initialFormData);
   const [saving, setSaving] = useState(false);
 
-  // Delete dialog
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
 
-  const fetchGalleries = () => {
+  /* ========================================
+     FETCH GALLERY
+  ======================================== */
+
+  const fetchGallery = async () => {
     setLoading(true);
-    getGallery()
-      .then((res) => setGalleries(res.data || []))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+
+    try {
+      const response = await getGallery();
+      setGallery(response?.data || []);
+    } catch (error) {
+      console.error("Failed to fetch gallery:", error);
+      setGallery([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    fetchGalleries();
+    fetchGallery();
   }, []);
+
+  /* ========================================
+     ADD
+  ======================================== */
 
   const openAddModal = () => {
     setFormData({
-      title: "",
-      description: "",
-      category: "event",
-      eventName: "",
-      eventDate: "",
+      ...initialFormData,
       images: [],
     });
+
+    setCurrentGallery(null);
     setIsEdit(false);
     setIsModalOpen(true);
   };
 
-  const openEditModal = (gallery) => {
-    setCurrentGallery(gallery);
+  /* ========================================
+     EDIT
+  ======================================== */
+
+  const openEditModal = (item) => {
+    setCurrentGallery(item);
+
     setFormData({
-      title: gallery.title,
-      description: gallery.description || "",
-      category: gallery.category,
-      eventName: gallery.eventName || "",
-      eventDate: gallery.eventDate
-        ? new Date(gallery.eventDate).toISOString().slice(0, 10)
+      title: item.title || "",
+      description: item.description || "",
+      category: item.category || "event",
+      eventName: item.eventName || "",
+      eventDate: item.eventDate
+        ? new Date(item.eventDate).toISOString().slice(0, 10)
         : "",
-      images: gallery.images?.map((img) => img.url) || [], // for preview
+      images: item.images || [],
     });
+
     setIsEdit(true);
     setIsModalOpen(true);
   };
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  /* ========================================
+     FORM CHANGE
+  ======================================== */
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
+  };
+
+  /* ========================================
+     IMAGE CHANGE
+  ======================================== */
+
+  const handleImagesChange = (images) => {
+    setFormData((previous) => ({
+      ...previous,
+      images,
+    }));
+  };
+
+  /* ========================================
+     SUBMIT
+  ======================================== */
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!formData.title.trim()) {
+      toast.error("Title is required");
+      return;
+    }
+
+    if (!formData.description.trim()) {
+      toast.error("Description is required");
+      return;
+    }
+
+    if (!isEdit && formData.images.length === 0) {
+      toast.error("Please upload at least one image");
+      return;
+    }
+
+    if (formData.images.length > 4) {
+      toast.error("Maximum 4 images are allowed");
+      return;
+    }
+
     setSaving(true);
+
     try {
       const data = new FormData();
-      Object.keys(formData).forEach((key) => {
-        if (key === "images") {
-          // If editing and no new files selected, backend might handle it or we skip
-          // If new files selected (they are File objects)
-          if (
-            formData.images.length > 0 &&
-            formData.images[0] instanceof File
-          ) {
-            formData.images.forEach((file) => data.append("images", file));
-          }
-        } else if (formData[key] !== null && formData[key] !== "") {
-          data.append(key, formData[key]);
+
+      data.append("title", formData.title);
+      data.append("description", formData.description);
+      data.append("category", formData.category);
+
+      if (formData.eventName) {
+        data.append("eventName", formData.eventName);
+      }
+
+      if (formData.eventDate) {
+        data.append("eventDate", formData.eventDate);
+      }
+
+      /*
+        New images are File objects.
+        Existing images are Cloudinary objects.
+      */
+      formData.images.forEach((image) => {
+        if (image instanceof File) {
+          data.append("images", image);
         }
       });
 
       if (isEdit) {
         await updateGallery(currentGallery._id, data);
-        toast.success("Gallery item updated successfully");
+        toast.success("Gallery updated successfully");
       } else {
-        if (
-          formData.images.length === 0 ||
-          !(formData.images[0] instanceof File)
-        ) {
-          toast.error("At least one image is required for new gallery item");
-          setSaving(false);
-          return;
-        }
         await createGallery(data);
         toast.success("Gallery item created successfully");
       }
+
       setIsModalOpen(false);
-      fetchGalleries();
-    } catch (err) {
-      toast.error(err?.response?.data?.message || "Something went wrong");
+      setFormData(initialFormData);
+      setCurrentGallery(null);
+
+      await fetchGallery();
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        error?.response?.data?.message ||
+          "Something went wrong"
+      );
     } finally {
       setSaving(false);
     }
   };
+
+  /* ========================================
+     DELETE
+  ======================================== */
 
   const confirmDelete = (id) => {
     setDeletingId(id);
@@ -130,154 +225,199 @@ export default function GalleryManager() {
   };
 
   const handleDelete = async () => {
+    if (!deletingId) return;
+
     setSaving(true);
+
     try {
       await deleteGallery(deletingId);
+
       toast.success("Gallery item deleted");
+
       setDeleteOpen(false);
-      fetchGalleries();
-    } catch (err) {
-      toast.error("Failed to delete gallery item");
+      setDeletingId(null);
+
+      await fetchGallery();
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        error?.response?.data?.message ||
+          "Failed to delete gallery item"
+      );
     } finally {
       setSaving(false);
     }
   };
 
-  if (loading) return <Loader />;
+  /* ========================================
+     LOADING
+  ======================================== */
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  /* ========================================
+     UI
+  ======================================== */
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "2rem",
-        }}
-      >
-        <h1 style={{ fontSize: "1.5rem" }}>Gallery Management</h1>
-        <button className="btn btn-primary" onClick={openAddModal}>
-          <FiPlus /> Add Gallery Item
+    <div className="gallery-manager">
+
+      {/* ========================================
+          HEADER
+      ======================================== */}
+
+      <div className="gallery-manager-header">
+        <h1 className="gallery-manager-title">
+          Gallery Management
+        </h1>
+
+        <button
+          type="button"
+          className="gallery-manager-btn gallery-manager-btn-primary"
+          onClick={openAddModal}
+        >
+          <FiPlus />
+          Add Gallery Item
         </button>
       </div>
 
-      <div className="table-wrapper">
-        <table className="data-table">
+      {/* ========================================
+          TABLE
+      ======================================== */}
+
+      <div className="gallery-manager-table-wrapper">
+        <table className="gallery-manager-data-table">
           <thead>
             <tr>
-              <th>Title</th>
+              <th>Gallery</th>
               <th>Category</th>
-              <th>Event Info</th>
-              <th style={{ textAlign: "right" }}>Actions</th>
+              <th>Event</th>
+              <th>Images</th>
+              <th>Actions</th>
             </tr>
           </thead>
+
           <tbody>
-            {galleries.length === 0 ? (
+            {gallery.length === 0 ? (
               <tr>
                 <td
-                  colSpan="4"
-                  style={{ textAlign: "center", padding: "2rem" }}
+                  colSpan="5"
+                  className="gallery-manager-empty-row"
                 >
                   No gallery items found
                 </td>
               </tr>
             ) : (
-              galleries.map((item) => (
+              gallery.map((item) => (
                 <tr key={item._id}>
+
+                  {/* Gallery */}
                   <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "1rem",
-                      }}
-                    >
-                      {item.images?.length > 0 ? (
+                    <div className="gallery-manager-item-info">
+
+                      {item.images?.length > 0 &&
+                      item.images[0]?.url ? (
                         <img
                           src={item.images[0].url}
-                          alt=""
-                          style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 8,
-                            objectFit: "cover",
-                          }}
+                          alt={item.title || "Gallery"}
+                          className="gallery-manager-image"
                         />
                       ) : (
-                        <div
-                          style={{
-                            width: 40,
-                            height: 40,
-                            background: "var(--accent-bg)",
-                            color: "var(--accent)",
-                            borderRadius: 8,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
+                        <div className="gallery-manager-image-placeholder">
                           <FiImage />
                         </div>
                       )}
+
                       <div>
-                        <span style={{ fontWeight: 600, display: "block" }}>
+                        <span className="gallery-manager-item-title">
                           {item.title}
                         </span>
-                        <span
-                          style={{
-                            fontSize: "0.75rem",
-                            color: "var(--text-muted)",
-                          }}
-                        >
-                          {item.images?.length} images
+
+                        <span className="gallery-manager-image-count">
+                          {item.images?.length || 0}{" "}
+                          {item.images?.length === 1
+                            ? "image"
+                            : "images"}
                         </span>
                       </div>
+
                     </div>
                   </td>
+
+                  {/* Category */}
                   <td>
-                    <span className="badge">{item.category}</span>
+                    <span className="gallery-manager-badge">
+                      {item.category}
+                    </span>
                   </td>
+
+                  {/* Event */}
                   <td>
-                    <div
-                      style={{
-                        fontSize: "0.85rem",
-                        color: "var(--text-secondary)",
-                      }}
-                    >
-                      {item.eventName && <div>{item.eventName}</div>}
+                    <div className="gallery-manager-event-info">
+
+                      {item.eventName && (
+                        <div>{item.eventName}</div>
+                      )}
+
                       {item.eventDate && (
                         <div>
-                          {new Date(item.eventDate).toLocaleDateString()}
+                          {new Date(
+                            item.eventDate
+                          ).toLocaleDateString("en-IN", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })}
                         </div>
                       )}
-                      {!item.eventName && !item.eventDate && <span>-</span>}
+
+                      {!item.eventName &&
+                        !item.eventDate && (
+                          <span>-</span>
+                        )}
+
                     </div>
                   </td>
-                  <td style={{ textAlign: "right" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "0.5rem",
-                        justifyContent: "flex-end",
-                      }}
-                    >
+
+                  {/* Image Count */}
+                  <td>
+                    <span className="gallery-manager-image-count">
+                      {item.images?.length || 0} / 4
+                    </span>
+                  </td>
+
+                  {/* Actions */}
+                  <td>
+                    <div className="gallery-manager-actions">
+
                       <button
-                        className="btn-icon"
-                        onClick={() => openEditModal(item)}
+                        type="button"
+                        className="gallery-manager-btn-icon"
+                        onClick={() =>
+                          openEditModal(item)
+                        }
                         title="Edit"
                       >
                         <FiEdit2 size={14} />
                       </button>
+
                       <button
-                        className="btn-icon"
-                        style={{ color: "#ef4444" }}
-                        onClick={() => confirmDelete(item._id)}
+                        type="button"
+                        className="gallery-manager-btn-icon gallery-manager-btn-delete"
+                        onClick={() =>
+                          confirmDelete(item._id)
+                        }
                         title="Delete"
                       >
                         <FiTrash2 size={14} />
                       </button>
+
                     </div>
                   </td>
+
                 </tr>
               ))
             )}
@@ -285,112 +425,168 @@ export default function GalleryManager() {
         </table>
       </div>
 
+      {/* ========================================
+          ADD / EDIT MODAL
+      ======================================== */}
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={isEdit ? "Edit Gallery Item" : "Add Gallery Item"}
+        title={
+          isEdit
+            ? "Edit Gallery Item"
+            : "Add Gallery Item"
+        }
+        size="lg"
       >
         <form
           onSubmit={handleSubmit}
-          style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
+          className="gallery-manager-form"
         >
-          <div className="form-group">
-            <label className="form-label">Title *</label>
+
+          {/* Title */}
+          <div className="gallery-manager-form-group">
+            <label className="gallery-manager-form-label">
+              Title *
+            </label>
+
             <input
               type="text"
               name="title"
-              className="form-input"
+              className="gallery-manager-form-input"
               value={formData.title}
               onChange={handleChange}
+              placeholder="Enter gallery title"
               required
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Description</label>
+
+          {/* Description */}
+          <div className="gallery-manager-form-group">
+            <label className="gallery-manager-form-label">
+              Description *
+            </label>
+
             <textarea
               name="description"
-              className="form-textarea"
+              className="gallery-manager-form-textarea"
               value={formData.description}
               onChange={handleChange}
+              placeholder="Describe this gallery item..."
+              required
             />
           </div>
-          <div className="form-grid">
-            <div className="form-group">
-              <label className="form-label">Category *</label>
+
+          {/* Category + Event Name */}
+          <div className="gallery-manager-form-grid">
+
+            <div className="gallery-manager-form-group">
+              <label className="gallery-manager-form-label">
+                Category *
+              </label>
+
               <select
                 name="category"
-                className="form-select"
+                className="gallery-manager-form-select"
                 value={formData.category}
                 onChange={handleChange}
                 required
               >
-                <option value="event">Event</option>
-                <option value="workshop">Workshop</option>
-                <option value="hackathon">Hackathon</option>
-                <option value="competition">Competition</option>
-                <option value="celebration">Celebration</option>
-                <option value="other">Other</option>
+                {categories.map((category) => (
+                  <option
+                    key={category}
+                    value={category}
+                  >
+                    {category
+                      .replace("_", " ")
+                      .replace(/\b\w/g, (letter) =>
+                        letter.toUpperCase()
+                      )}
+                  </option>
+                ))}
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Event Date</label>
+
+            <div className="gallery-manager-form-group">
+              <label className="gallery-manager-form-label">
+                Event Name
+              </label>
+
               <input
-                type="date"
-                name="eventDate"
-                className="form-input"
-                value={formData.eventDate}
+                type="text"
+                name="eventName"
+                className="gallery-manager-form-input"
+                value={formData.eventName}
                 onChange={handleChange}
+                placeholder="e.g. DSA Showdown"
               />
             </div>
+
           </div>
-          <div className="form-group">
-            <label className="form-label">Event Name</label>
+
+          {/* Event Date */}
+          <div className="gallery-manager-form-group">
+            <label className="gallery-manager-form-label">
+              Event Date
+            </label>
+
             <input
-              type="text"
-              name="eventName"
-              className="form-input"
-              value={formData.eventName}
+              type="date"
+              name="eventDate"
+              className="gallery-manager-form-input"
+              value={formData.eventDate}
               onChange={handleChange}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Images (Max 4)</label>
+
+          {/* Images */}
+          <div className="gallery-manager-form-group">
+            <label className="gallery-manager-form-label">
+              Images
+            </label>
+
             <ImageUpload
-              multiple={true}
-              maxFiles={4}
               value={formData.images}
-              onChange={(files) => setFormData({ ...formData, images: files })}
+              onChange={handleImagesChange}
+              multiple
+              maxFiles={4}
             />
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: "1rem",
-              marginTop: "1rem",
-            }}
-          >
+
+          {/* Modal Actions */}
+          <div className="gallery-manager-modal-actions">
+
             <button
               type="button"
-              className="btn-ghost"
-              onClick={() => setIsModalOpen(false)}
-              style={{
-                padding: "0.5rem 1rem",
-                borderRadius: "var(--radius-full)",
-                border: "1px solid var(--border)",
-                background: "transparent",
-                color: "var(--text-secondary)",
-                cursor: "pointer",
-              }}
+              className="gallery-manager-btn gallery-manager-btn-ghost"
+              onClick={() =>
+                setIsModalOpen(false)
+              }
+              disabled={saving}
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn-primary" disabled={saving}>
-              {saving ? "Saving..." : "Save Gallery Item"}
+
+            <button
+              type="submit"
+              className="gallery-manager-btn gallery-manager-btn-primary"
+              disabled={saving}
+            >
+              {saving
+                ? "Saving..."
+                : isEdit
+                ? "Update Gallery"
+                : "Save Gallery"}
             </button>
+
           </div>
+
         </form>
       </Modal>
+
+      {/* ========================================
+          DELETE CONFIRMATION
+      ======================================== */}
 
       <ConfirmDialog
         isOpen={deleteOpen}
@@ -398,6 +594,7 @@ export default function GalleryManager() {
         onConfirm={handleDelete}
         loading={saving}
       />
+
     </div>
   );
 }

@@ -3,10 +3,10 @@ import { FiPlus, FiEdit2, FiTrash2, FiCalendar } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { getEvents, createEvent, updateEvent, deleteEvent } from "../api/api.js";
 
-import Modal from "../components/Modal.jsx";
-import ConfirmDialog from "../components/ConfirmDialog.jsx";
-import ImageUpload from "../components/ImageUpload.jsx";
-import Loader from "../components/Loader.jsx";
+import Modal from "../components/common/Modal.jsx";
+import ConfirmDialog from "../components/common/ConfirmDialog.jsx";
+import ImageUpload from "../components/common/ImageUpload.jsx";
+import Loader from "../components/common/Loader.jsx";
 import "./EventsManager.css";
 
 export default function EventsManager() {
