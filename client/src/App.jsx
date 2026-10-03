@@ -13,6 +13,7 @@ import Navbar from "./components/Common/Navbar.jsx";
 import Footer from "./components/common/Footer.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Loader from "./components/common/Loader.jsx";
+import Error from "./components/Common/Error.jsx";
 
 import Home from "./pages/Home.jsx";
 import About from "./pages/AboutUs.jsx";
@@ -31,8 +32,6 @@ import ProjectsManager from "./dashboard/ProjectsManager.jsx";
 import AchievementsManager from "./dashboard/AchievementsManager.jsx";
 import GalleryManager from "./dashboard/GalleryManager.jsx";
 import TeamManager from "./dashboard/TeamManager.jsx";
-
-const NO_FOOTER_PATHS = ["/dashboard"];
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -99,6 +98,7 @@ function AppContent() {
               <Route path="achievements" element={<AchievementsManager />} />
               <Route path="team" element={<TeamManager />} />
             </Route>
+            <Route path="*" element={<Error />} />
           </Routes>
         </AnimatePresence>
       </main>
