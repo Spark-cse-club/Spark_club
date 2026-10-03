@@ -1,0 +1,44 @@
+.spark-theme-toggle {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--accent-bg);
+  color: var(--accent);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.spark-theme-toggle:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg-hover);
+  transform: translateY(-1px);
+}
+
+.spark-theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.spark-theme-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .spark-theme-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .spark-theme-toggle-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+}

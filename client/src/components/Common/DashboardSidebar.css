@@ -1,0 +1,115 @@
+.dashboard-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 1rem;
+  position: sticky;
+  top: var(--nav-height);
+  height: calc(100vh - var(--nav-height));
+  overflow-y: auto;
+  transition: var(--transition);
+}
+
+.dashboard-sidebar-user-info {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--accent-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.dashboard-sidebar-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.dashboard-sidebar-username {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.dashboard-sidebar-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+.dashboard-sidebar-nav-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 0 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dashboard-sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+}
+.dashboard-sidebar-nav-item:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.dashboard-sidebar-nav-item.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.dashboard-sidebar-nav-icon {
+  flex-shrink: 0;
+}
+
+.dashboard-sidebar-nav-arrow {
+  margin-left: auto;
+  opacity: 0.4;
+}
+
+@media (max-width: 768px) {
+  .dashboard-sidebar {
+    position: fixed;
+    left: -260px;
+    top: var(--nav-height);
+    z-index: 200;
+    height: calc(100vh - var(--nav-height));
+    box-shadow: var(--shadow-lg);
+  }
+  .dashboard-sidebar.open {
+    left: 0;
+  }
+}

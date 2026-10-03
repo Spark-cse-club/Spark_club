@@ -1,0 +1,46 @@
+.spark-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.spark-brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #312e81;
+}
+
+.spark-brand-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.spark-brand-name {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+
+.spark-brand-tagline {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.spark-brand--compact .spark-brand-tagline {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .spark-brand-tagline {
+    display: none;
+  }
+}
