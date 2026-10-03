@@ -103,7 +103,7 @@
 
 .spark-login-subtitle {
   margin: 0;
-  color: var(--text-muted);
+  color: red;
   font-size: 0.9rem;
   line-height: 1.5;
 }

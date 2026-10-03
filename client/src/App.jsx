@@ -9,10 +9,10 @@ import { getCurrentUser, refreshAccessToken } from "./api/api.js";
 import { login, setLoading } from "./store/authSlice.js";
 import { setTheme } from "./store/themeSlice.js";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "./components/Common/Navbar.jsx";
+import Footer from "./components/common/Footer.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Loader from "./components/Loader.jsx";
+import Loader from "./components/common/Loader.jsx";
 
 import Home from "./pages/Home.jsx";
 import About from "./pages/AboutUs.jsx";

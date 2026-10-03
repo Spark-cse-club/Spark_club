@@ -97,7 +97,7 @@ export default function Login() {
             </h1>
 
             <p className="spark-login-subtitle">
-              Sign in to your Spark dashboard
+              Sign in Only For <strong>Core Team</strong> of Club
             </p>
           </div>
 
