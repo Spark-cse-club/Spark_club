@@ -1,0 +1,252 @@
+/* GALLERY CARD */
+
+.gallery-card {
+  width: 100%;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+  box-shadow:
+    0 12px 30px rgba(79, 70, 229, 0.12);
+}
+
+
+/* COVER IMAGE  */
+
+.gallery-card-cover {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: var(--hero-circle);
+}
+
+.gallery-card-cover > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.gallery-card:hover .gallery-card-cover > img {
+  transform: scale(1.03);
+}
+
+
+/* IMAGE PLACEHOLDER */
+
+.gallery-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+}
+
+.gallery-card-placeholder svg {
+  width: 42px;
+  height: 42px;
+}
+
+
+/*  IMAGE COUNT */
+
+.gallery-image-count {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.68);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+
+.gallery-image-count svg {
+  width: 14px;
+  height: 14px;
+}
+
+
+/* CONTENT */
+
+.gallery-card-content {
+  padding: 18px 20px 20px;
+}
+
+
+/*   HEADER  */
+
+.gallery-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.gallery-card-header h3 {
+  min-width: 0;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+
+/*  CATEGORY */
+
+.gallery-category {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--hero-circle);
+  color: var(--accent-color);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+
+/*  META */
+
+.gallery-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.gallery-card-meta svg {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+
+  color: var(--accent-color);
+}
+
+
+/* THUMBNAILS */
+
+.gallery-card-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin-top: 17px;
+}
+
+.gallery-card-thumbnail {
+  width: 100%;
+  height: 58px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: var(--hero-circle);
+}
+
+.gallery-card-thumbnail img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.gallery-card-thumbnail:hover img {
+  transform: scale(1.05);
+}
+
+
+/*  VIEW DETAILS */
+
+.gallery-view-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 17px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--accent-color);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.gallery-view-button svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.gallery-view-button:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #ffffff;
+}
+
+.gallery-view-button:hover svg {
+  transform: translateX(3px);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+  .gallery-card-cover {
+    height: 220px;
+  }
+
+  .gallery-card-content {
+    padding: 18px;
+  }
+}
+
+
+@media (max-width: 450px) {
+  .gallery-card-cover {
+    height: 200px;
+  }
+
+  .gallery-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .gallery-card-thumbnail {
+    height: 55px;
+  }
+}

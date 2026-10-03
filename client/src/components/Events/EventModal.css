@@ -1,0 +1,379 @@
+/* EVENT MODAL OVERLAY */
+
+.event-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(8, 10, 20, 0.65);
+  backdrop-filter: blur(6px);
+  animation: event-modal-fade 0.2s ease;
+}
+
+
+/*  MODAL */
+
+.event-modal {
+  position: relative;
+  width: min(850px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+  animation: event-modal-slide 0.25s ease;
+}
+
+
+/* CLOSE BUTTON */
+
+.event-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #20202a;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.event-modal-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.event-modal-close:hover {
+  background: var(--accent-color);
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+
+/*  MODAL IMAGE */
+
+.event-modal-image {
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  background: var(--hero-circle);
+}
+
+.event-modal-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.event-modal-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+}
+
+.event-modal-image-placeholder svg {
+  width: 55px;
+  height: 55px;
+}
+
+
+/*  CONTENT */
+
+.event-modal-content {
+  padding: 28px 30px 30px;
+}
+
+
+/*  BADGES */
+
+.event-modal-badges {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.event-modal-category,
+.event-modal-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.event-modal-category {
+  background: var(--hero-circle);
+  color: var(--accent-color);
+}
+
+.event-modal-status {
+  background: var(--accent-color);
+  color: #ffffff;
+}
+
+.event-modal-status.upcoming {
+  background: var(--accent-color);
+}
+
+.event-modal-status.ongoing {
+  background: #16a34a;
+}
+
+.event-modal-status.completed {
+  background: #64748b;
+}
+
+
+/*   TITLE */
+
+.event-modal-content h2 {
+  margin: 0;
+  font-size: clamp(1.7rem, 4vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 750;
+  color: var(--text-primary);
+}
+
+
+/*  EVENT INFORMATION */
+
+.event-modal-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 25px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.event-modal-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.event-modal-info-item > svg {
+  flex-shrink: 0;
+  width: 19px;
+  height: 19px;
+  margin-top: 2px;
+  color: var(--accent-color);
+}
+
+.event-modal-info-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.event-modal-info-item span {
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.event-modal-info-item strong {
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+
+/*  DESCRIPTION */
+
+.event-modal-description {
+  margin-top: 25px;
+}
+
+.event-modal-description h3 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.event-modal-description p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+
+/*  ACTIONS */
+
+.event-modal-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 26px;
+}
+
+.event-register-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid var(--accent-color);
+  border-radius: 9px;
+  background: var(--accent-color);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.event-register-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.event-register-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+
+/*  COMPLETED MESSAGE */
+
+.event-completed-message {
+  margin-top: 24px;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: var(--hero-circle);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+
+/* SCROLLBAR */
+
+.event-modal::-webkit-scrollbar {
+  width: 7px;
+}
+
+.event-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.event-modal::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+
+/*   ANIMATIONS */
+
+@keyframes event-modal-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes event-modal-slide {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/*   RESPONSIVE */
+
+@media (max-width: 700px) {
+  .event-modal-overlay {
+    padding: 15px;
+    align-items: center;
+  }
+
+  .event-modal {
+    max-height: 92vh;
+    border-radius: 15px;
+  }
+
+  .event-modal-image {
+    height: 240px;
+  }
+
+  .event-modal-content {
+    padding: 22px 20px 24px;
+  }
+
+  .event-modal-info {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+
+@media (max-width: 450px) {
+  .event-modal-overlay {
+    padding: 10px;
+  }
+
+  .event-modal {
+    max-height: 94vh;
+  }
+
+  .event-modal-image {
+    height: 200px;
+  }
+
+  .event-modal-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .event-modal-content {
+    padding: 20px 17px 22px;
+  }
+
+  .event-modal-close {
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .event-register-button {
+    width: 100%;
+  }
+}

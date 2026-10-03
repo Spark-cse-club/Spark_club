@@ -1,0 +1,469 @@
+/*  ACHIEVEMENT MODAL OVERLAY */
+
+.achievement-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(10, 12, 25, 0.72);
+  backdrop-filter: blur(8px);
+  animation: achievementModalFadeIn 0.2s ease;
+}
+
+@keyframes achievementModalFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* MODAL */
+
+.achievement-modal {
+  position: relative;
+  width: min(900px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+  animation: achievementModalSlideUp 0.25s ease;
+}
+
+@keyframes achievementModalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* CLOSE BUTTON */
+
+.achievement-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #ffffff;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.achievement-modal-close svg {
+  width: 19px;
+  height: 19px;
+}
+
+.achievement-modal-close:hover {
+  background: var(--accent-color);
+  transform: rotate(90deg);
+}
+
+
+/* IMAGE SECTION */
+
+.achievement-modal-image-section {
+  position: relative;
+  width: 100%;
+  height: 470px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #0d0f18;
+}
+
+.achievement-modal-main-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+
+/* PLACEHOLDER */
+
+.achievement-modal-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b8fa8;
+}
+
+.achievement-modal-placeholder svg {
+  width: 52px;
+  height: 52px;
+}
+
+
+/*  PREVIOUS / NEXT */
+
+.achievement-modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #ffffff;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.achievement-modal-nav svg {
+  width: 22px;
+  height: 22px;
+}
+
+.achievement-modal-nav:hover {
+  background: var(--accent-color);
+}
+
+.achievement-modal-prev {
+  left: 16px;
+}
+
+.achievement-modal-next {
+  right: 16px;
+}
+
+.achievement-modal-prev:hover {
+  transform: translateY(-50%) translateX(-2px);
+}
+
+.achievement-modal-next:hover {
+  transform: translateY(-50%) translateX(2px);
+}
+
+
+/*  COUNTER */
+
+.achievement-modal-counter {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.62);
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+
+
+/* THUMBNAILS */
+
+.achievement-modal-thumbnails {
+  display: flex;
+  gap: 8px;
+  padding: 12px 18px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--card-bg);
+}
+
+.achievement-modal-thumbnail {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 55px;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.65;
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.achievement-modal-thumbnail img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.achievement-modal-thumbnail:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.achievement-modal-thumbnail.active {
+  border-color: var(--accent-color);
+  opacity: 1;
+}
+
+
+/*  CONTENT */
+
+.achievement-modal-content {
+  padding: 24px 26px 28px;
+}
+
+
+/* BADGES */
+
+.achievement-modal-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+
+.achievement-modal-category,
+.achievement-modal-rank {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.achievement-modal-category {
+  background: var(--hero-circle);
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.achievement-modal-rank {
+  background: var(--section-bg);
+  color: var(--text-secondary);
+}
+
+
+/*  TITLE */
+
+.achievement-modal-content h2 {
+  margin: 0 0 20px;
+  color: var(--text-primary);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+
+/*  INFORMATION */
+
+.achievement-modal-info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.achievement-modal-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--section-bg);
+}
+
+.achievement-modal-info-item > svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  color: var(--accent-color);
+}
+
+.achievement-modal-info-item div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.achievement-modal-info-item span {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+}
+
+.achievement-modal-info-item strong {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+
+/*  DESCRIPTION */
+
+.achievement-modal-description {
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.achievement-modal-description h3 {
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.achievement-modal-description p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+
+/*  EXTERNAL LINK */
+
+.achievement-modal-actions {
+  margin-top: 20px;
+}
+
+.achievement-modal-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  background: var(--accent-color);
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.achievement-modal-link:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.achievement-modal-link svg {
+  width: 15px;
+  height: 15px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+  .achievement-modal-overlay {
+    padding: 12px;
+  }
+
+  .achievement-modal {
+    max-height: 94vh;
+    border-radius: 14px;
+  }
+
+  .achievement-modal-image-section {
+    height: 360px;
+  }
+
+  .achievement-modal-content {
+    padding: 20px;
+  }
+
+  .achievement-modal-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .achievement-modal-overlay {
+    padding: 0;
+  }
+
+  .achievement-modal {
+    width: 100%;
+    max-height: 100vh;
+
+    border: none;
+    border-radius: 0;
+  }
+
+  .achievement-modal-image-section {
+    height: 300px;
+  }
+
+  .achievement-modal-close {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .achievement-modal-nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .achievement-modal-prev {
+    left: 10px;
+  }
+
+  .achievement-modal-next {
+    right: 10px;
+  }
+
+  .achievement-modal-thumbnails {
+    padding: 10px 14px;
+  }
+
+  .achievement-modal-thumbnail {
+    flex-basis: 64px;
+    width: 64px;
+    height: 50px;
+  }
+
+  .achievement-modal-content {
+    padding: 18px 16px 24px;
+  }
+
+  .achievement-modal-content h2 {
+    font-size: 1.3rem;
+  }
+}
