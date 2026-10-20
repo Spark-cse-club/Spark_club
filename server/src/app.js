@@ -29,7 +29,7 @@ app.use(helmet());
 app.use(limiter);
 app.use(
   cors({
-    origin : "http://localhost:5173",
+    origin : process.env.Vite_Base_URL || "http://localhost:5173/",
     credentials: true,
   })
 );
