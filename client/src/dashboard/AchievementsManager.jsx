@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  FiPlus,
-  FiEdit2,
-  FiTrash2,
-  FiAward,
-} from "react-icons/fi";
+import { FiPlus, FiEdit2, FiTrash2, FiAward } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 import {
@@ -14,10 +9,10 @@ import {
   deleteAchievement,
 } from "../api/api.js";
 
-import Modal from "../components/common/Modal.jsx";
-import ConfirmDialog from "../components/common/ConfirmDialog.jsx";
-import ImageUpload from "../components/common/ImageUpload.jsx";
-import Loader from "../components/common/Loader.jsx";
+import Modal from "../components/Common/Modal.jsx";
+import ConfirmDialog from "../components/Common/ConfirmDialog.jsx";
+import ImageUpload from "../components/Common/ImageUpload.jsx";
+import Loader from "../components/Common/Loader.jsx";
 
 import "./AchievementsManager.css";
 
@@ -97,9 +92,7 @@ export default function AchievementsManager() {
       description: achievement.description || "",
       category: achievement.category || "other",
       achievementDate: achievement.achievementDate
-        ? new Date(achievement.achievementDate)
-            .toISOString()
-            .slice(0, 10)
+        ? new Date(achievement.achievementDate).toISOString().slice(0, 10)
         : "",
       personName: achievement.personName || "",
       teamName: achievement.teamName || "",
@@ -160,9 +153,7 @@ export default function AchievementsManager() {
     }
 
     if (!isEdit && formData.images.length === 0) {
-      toast.error(
-        "At least one image is required for new achievement"
-      );
+      toast.error("At least one image is required for new achievement");
       return;
     }
 
@@ -179,10 +170,7 @@ export default function AchievementsManager() {
       data.append("title", formData.title);
       data.append("description", formData.description);
       data.append("category", formData.category);
-      data.append(
-        "achievementDate",
-        formData.achievementDate
-      );
+      data.append("achievementDate", formData.achievementDate);
 
       if (formData.personName) {
         data.append("personName", formData.personName);
@@ -193,10 +181,7 @@ export default function AchievementsManager() {
       }
 
       if (formData.organization) {
-        data.append(
-          "organization",
-          formData.organization
-        );
+        data.append("organization", formData.organization);
       }
 
       if (formData.rank) {
@@ -218,20 +203,13 @@ export default function AchievementsManager() {
       });
 
       if (isEdit) {
-        await updateAchievement(
-          currentAch._id,
-          data
-        );
+        await updateAchievement(currentAch._id, data);
 
-        toast.success(
-          "Achievement updated successfully"
-        );
+        toast.success("Achievement updated successfully");
       } else {
         await createAchievement(data);
 
-        toast.success(
-          "Achievement created successfully"
-        );
+        toast.success("Achievement created successfully");
       }
 
       setIsModalOpen(false);
@@ -242,10 +220,7 @@ export default function AchievementsManager() {
     } catch (error) {
       console.error(error);
 
-      toast.error(
-        error?.response?.data?.message ||
-          "Something went wrong"
-      );
+      toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setSaving(false);
     }
@@ -278,8 +253,7 @@ export default function AchievementsManager() {
       console.error(error);
 
       toast.error(
-        error?.response?.data?.message ||
-          "Failed to delete achievement"
+        error?.response?.data?.message || "Failed to delete achievement",
       );
     } finally {
       setSaving(false);
@@ -300,15 +274,12 @@ export default function AchievementsManager() {
 
   return (
     <div className="achievements-manager">
-
       {/* ========================================
           HEADER
       ======================================== */}
 
       <div className="achievements-manager-header">
-        <h1 className="achievements-manager-title">
-          Achievements Management
-        </h1>
+        <h1 className="achievements-manager-title">Achievements Management</h1>
 
         <button
           type="button"
@@ -339,29 +310,21 @@ export default function AchievementsManager() {
           <tbody>
             {achievements.length === 0 ? (
               <tr>
-                <td
-                  colSpan="5"
-                  className="achievements-manager-empty-row"
-                >
+                <td colSpan="5" className="achievements-manager-empty-row">
                   No achievements found
                 </td>
               </tr>
             ) : (
               achievements.map((achievement) => (
                 <tr key={achievement._id}>
-
                   {/* Achievement */}
                   <td>
                     <div className="achievements-manager-item-info">
-
                       {achievement.images?.length > 0 &&
                       achievement.images[0]?.url ? (
                         <img
                           src={achievement.images[0].url}
-                          alt={
-                            achievement.title ||
-                            "Achievement"
-                          }
+                          alt={achievement.title || "Achievement"}
                           className="achievements-manager-image"
                         />
                       ) : (
@@ -387,15 +350,13 @@ export default function AchievementsManager() {
                           </span>
                         )}
                       </div>
-
                     </div>
                   </td>
 
                   {/* Category */}
                   <td>
                     <span className="achievements-manager-badge">
-                      {achievement.category
-                        ?.replace("_", " ")}
+                      {achievement.category?.replace("_", " ")}
                     </span>
                   </td>
 
@@ -404,15 +365,12 @@ export default function AchievementsManager() {
                     <span className="achievements-manager-date">
                       {achievement.achievementDate
                         ? new Date(
-                            achievement.achievementDate
-                          ).toLocaleDateString(
-                            "en-IN",
-                            {
-                              day: "2-digit",
-                              month: "short",
-                              year: "numeric",
-                            }
-                          )
+                            achievement.achievementDate,
+                          ).toLocaleDateString("en-IN", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })
                         : "-"}
                     </span>
                   </td>
@@ -427,13 +385,10 @@ export default function AchievementsManager() {
                   {/* Actions */}
                   <td>
                     <div className="achievements-manager-actions">
-
                       <button
                         type="button"
                         className="achievements-manager-btn-icon"
-                        onClick={() =>
-                          openEditModal(achievement)
-                        }
+                        onClick={() => openEditModal(achievement)}
                         title="Edit"
                       >
                         <FiEdit2 size={14} />
@@ -442,19 +397,13 @@ export default function AchievementsManager() {
                       <button
                         type="button"
                         className="achievements-manager-btn-icon achievements-manager-btn-delete"
-                        onClick={() =>
-                          confirmDelete(
-                            achievement._id
-                          )
-                        }
+                        onClick={() => confirmDelete(achievement._id)}
                         title="Delete"
                       >
                         <FiTrash2 size={14} />
                       </button>
-
                     </div>
                   </td>
-
                 </tr>
               ))
             )}
@@ -469,23 +418,13 @@ export default function AchievementsManager() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={
-          isEdit
-            ? "Edit Achievement"
-            : "Add Achievement"
-        }
+        title={isEdit ? "Edit Achievement" : "Add Achievement"}
         size="lg"
       >
-        <form
-          onSubmit={handleSubmit}
-          className="achievements-manager-form"
-        >
-
+        <form onSubmit={handleSubmit} className="achievements-manager-form">
           {/* Title */}
           <div className="achievements-manager-form-group">
-            <label className="achievements-manager-form-label">
-              Title *
-            </label>
+            <label className="achievements-manager-form-label">Title *</label>
 
             <input
               type="text"
@@ -516,7 +455,6 @@ export default function AchievementsManager() {
 
           {/* Category + Date */}
           <div className="achievements-manager-form-grid">
-
             <div className="achievements-manager-form-group">
               <label className="achievements-manager-form-label">
                 Category *
@@ -529,45 +467,25 @@ export default function AchievementsManager() {
                 onChange={handleChange}
                 required
               >
-                <option value="placement">
-                  Placement
-                </option>
+                <option value="placement">Placement</option>
 
-                <option value="competition">
-                  Competition
-                </option>
+                <option value="competition">Competition</option>
 
-                <option value="hackathon">
-                  Hackathon
-                </option>
+                <option value="hackathon">Hackathon</option>
 
-                <option value="exam">
-                  Exam
-                </option>
+                <option value="exam">Exam</option>
 
-                <option value="open_source">
-                  Open Source
-                </option>
+                <option value="open_source">Open Source</option>
 
-                <option value="research">
-                  Research
-                </option>
+                <option value="research">Research</option>
 
-                <option value="certification">
-                  Certification
-                </option>
+                <option value="certification">Certification</option>
 
-                <option value="internship">
-                  Internship
-                </option>
+                <option value="internship">Internship</option>
 
-                <option value="award">
-                  Award
-                </option>
+                <option value="award">Award</option>
 
-                <option value="other">
-                  Other
-                </option>
+                <option value="other">Other</option>
               </select>
             </div>
 
@@ -585,12 +503,10 @@ export default function AchievementsManager() {
                 required
               />
             </div>
-
           </div>
 
           {/* Person + Team */}
           <div className="achievements-manager-form-grid">
-
             <div className="achievements-manager-form-group">
               <label className="achievements-manager-form-label">
                 Person Name
@@ -620,12 +536,10 @@ export default function AchievementsManager() {
                 placeholder="Team name"
               />
             </div>
-
           </div>
 
           {/* Organization + Rank */}
           <div className="achievements-manager-form-grid">
-
             <div className="achievements-manager-form-group">
               <label className="achievements-manager-form-label">
                 Organization
@@ -655,7 +569,6 @@ export default function AchievementsManager() {
                 placeholder="e.g. 1st, Winner"
               />
             </div>
-
           </div>
 
           {/* External Link */}
@@ -690,13 +603,10 @@ export default function AchievementsManager() {
 
           {/* Actions */}
           <div className="achievements-manager-modal-actions">
-
             <button
               type="button"
               className="achievements-manager-btn achievements-manager-btn-ghost"
-              onClick={() =>
-                setIsModalOpen(false)
-              }
+              onClick={() => setIsModalOpen(false)}
               disabled={saving}
             >
               Cancel
@@ -710,12 +620,10 @@ export default function AchievementsManager() {
               {saving
                 ? "Saving..."
                 : isEdit
-                ? "Update Achievement"
-                : "Save Achievement"}
+                  ? "Update Achievement"
+                  : "Save Achievement"}
             </button>
-
           </div>
-
         </form>
       </Modal>
 
@@ -729,7 +637,6 @@ export default function AchievementsManager() {
         onConfirm={handleDelete}
         loading={saving}
       />
-
     </div>
   );
 }

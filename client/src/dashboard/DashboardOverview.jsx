@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  FiCalendar,
-  FiCode,
-  FiAward,
-  FiImage,
-  FiUsers,
-} from "react-icons/fi";
+import { FiCalendar, FiCode, FiAward, FiImage, FiUsers } from "react-icons/fi";
 
 import { getStats } from "../api/api.js";
 
-import Loader from "../components/common/Loader.jsx";
+import Loader from "../components/Common/Loader.jsx";
 import "./DashboardOverview.css";
 
 export default function DashboardOverview() {
@@ -31,14 +25,14 @@ export default function DashboardOverview() {
       try {
         const response = await getStats();
         setCounts(response?.data || {});
-      } catch(error) {
-        console.error("Failed to fetch dashboard stats : ",error);
+      } catch (error) {
+        console.error("Failed to fetch dashboard stats : ", error);
       } finally {
         setLoading(false);
       }
     };
     fetchstats();
-  }, [])
+  }, []);
 
   if (loading) return <Loader />;
 
@@ -83,9 +77,7 @@ export default function DashboardOverview() {
   return (
     <div>
       <div className="dashboard-overview-header">
-        <h1 className="dashboard-overview-title">
-          Dashboard Overview
-        </h1>
+        <h1 className="dashboard-overview-title">Dashboard Overview</h1>
 
         <p className="dashboard-overview-subtitle">
           Welcome back, {user?.name}! Here's what's happening in the club.
@@ -94,10 +86,7 @@ export default function DashboardOverview() {
 
       <div className="dashboard-overview-grid">
         {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="dashboard-overview-stat-card"
-          >
+          <div key={stat.label} className="dashboard-overview-stat-card">
             <div
               className="dashboard-overview-stat-icon"
               style={{
@@ -109,13 +98,9 @@ export default function DashboardOverview() {
             </div>
 
             <div>
-              <div className="dashboard-overview-stat-value">
-                {stat.value}
-              </div>
+              <div className="dashboard-overview-stat-value">{stat.value}</div>
 
-              <div className="dashboard-overview-stat-label">
-                {stat.label}
-              </div>
+              <div className="dashboard-overview-stat-label">{stat.label}</div>
             </div>
           </div>
         ))}

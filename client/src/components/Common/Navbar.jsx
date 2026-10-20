@@ -3,7 +3,12 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  FiZap, FiMenu, FiX, FiLogIn, FiLogOut, FiLayout,
+  FiZap,
+  FiMenu,
+  FiX,
+  FiLogIn,
+  FiLogOut,
+  FiLayout,
 } from "react-icons/fi";
 import { logoutUser } from "../../api/api.js";
 import { logout } from "../../store/authSlice.js";
@@ -66,9 +71,7 @@ export default function Navbar() {
             >
               <FiZap color="white" size={20} />
             </motion.div>
-            <span className="navbar-logo-text">
-              Spark Club
-            </span>
+            <span className="navbar-logo-text">Spark Club</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -78,7 +81,9 @@ export default function Navbar() {
                 key={link.to}
                 to={link.to}
                 end={link.exact}
-                className={({ isActive }) => `navbar-nav-link ${isActive ? "active" : ""}`}
+                className={({ isActive }) =>
+                  `navbar-nav-link ${isActive ? "active" : ""}`
+                }
               >
                 {link.label}
               </NavLink>
@@ -91,11 +96,17 @@ export default function Navbar() {
 
             {isAuthenticated ? (
               <div className="navbar-auth-group">
-                <Link to="/dashboard" className="navbar-btn navbar-btn-secondary">
+                <Link
+                  to="/dashboard"
+                  className="navbar-btn navbar-btn-secondary"
+                >
                   <FiLayout size={14} />
                   Dashboard
                 </Link>
-                <button onClick={handleLogout} className="navbar-btn navbar-btn-ghost">
+                <button
+                  onClick={handleLogout}
+                  className="navbar-btn navbar-btn-ghost"
+                >
                   <FiLogOut size={14} />
                 </button>
               </div>
@@ -132,7 +143,9 @@ export default function Navbar() {
                 to={link.to}
                 end={link.exact}
                 onClick={() => setMenuOpen(false)}
-                className={({ isActive }) => `navbar-mobile-link ${isActive ? "active" : ""}`}
+                className={({ isActive }) =>
+                  `navbar-mobile-link ${isActive ? "active" : ""}`
+                }
               >
                 {link.label}
               </NavLink>

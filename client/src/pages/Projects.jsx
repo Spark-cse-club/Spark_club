@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FiCode } from "react-icons/fi";
 
 import { getProjects } from "../api/api.js";
-import Loader from "../components/common/Loader.jsx";
+import Loader from "../components/Common/Loader.jsx";
 import ProjectCard from "../components/Project/ProjectCard.jsx";
 import ProjectModal from "../components/Project/ProjectModal.jsx";
 
@@ -51,9 +51,7 @@ export default function Projects() {
   const filteredProjects =
     filter === "all"
       ? projects
-      : projects.filter(
-          (project) => project.category === filter
-        );
+      : projects.filter((project) => project.category === filter);
 
   if (loading) {
     return <Loader />;
@@ -84,22 +82,14 @@ export default function Projects() {
               </span>
             </motion.div>
 
-            <motion.h1
-              variants={fadeUp}
-              className="spark-projects-heading"
-            >
+            <motion.h1 variants={fadeUp} className="spark-projects-heading">
               Club{" "}
-              <span className="spark-projects-heading-accent">
-                Projects
-              </span>
+              <span className="spark-projects-heading-accent">Projects</span>
             </motion.h1>
 
-            <motion.p
-              variants={fadeUp}
-              className="spark-projects-lede"
-            >
-              Innovative software and hardware projects built by
-              our talented members.
+            <motion.p variants={fadeUp} className="spark-projects-lede">
+              Innovative software and hardware projects built by our talented
+              members.
             </motion.p>
           </motion.div>
         </div>
@@ -116,15 +106,12 @@ export default function Projects() {
                 type="button"
                 onClick={() => setFilter(category)}
                 className={`spark-projects-filter ${
-                  filter === category
-                    ? "spark-projects-filter-active"
-                    : ""
+                  filter === category ? "spark-projects-filter-active" : ""
                 }`}
               >
                 {category === "all"
                   ? "All Projects"
-                  : category.charAt(0).toUpperCase() +
-                    category.slice(1)}
+                  : category.charAt(0).toUpperCase() + category.slice(1)}
               </button>
             ))}
           </div>
@@ -152,15 +139,10 @@ export default function Projects() {
               }}
             >
               {filteredProjects.map((project) => (
-                <motion.div
-                  key={project._id}
-                  variants={fadeUp}
-                >
+                <motion.div key={project._id} variants={fadeUp}>
                   <ProjectCard
                     project={project}
-                    onViewDetails={() =>
-                      setSelectedProject(project)
-                    }
+                    onViewDetails={() => setSelectedProject(project)}
                   />
                 </motion.div>
               ))}

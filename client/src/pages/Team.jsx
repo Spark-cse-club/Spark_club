@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FiUsers } from "react-icons/fi";
 
 import { getCoreTeam, getFaculty } from "../api/api.js";
-import Loader from "../components/common/Loader.jsx";
+import Loader from "../components/Common/Loader.jsx";
 import TeamCard from "../components/Team/TeamCard.jsx";
 import TeamModal from "../components/Team/TeamModal.jsx";
 
@@ -107,22 +107,12 @@ export default function Team() {
               </span>
             </motion.div>
 
-            <motion.h1
-              variants={fadeUp}
-              className="spark-team-heading"
-            >
-              Meet the{" "}
-              <span className="spark-team-heading-accent">
-                Team
-              </span>
+            <motion.h1 variants={fadeUp} className="spark-team-heading">
+              Meet the <span className="spark-team-heading-accent">Team</span>
             </motion.h1>
 
-            <motion.p
-              variants={fadeUp}
-              className="spark-team-lede"
-            >
-              The passionate people driving Spark CSE Club
-              forward.
+            <motion.p variants={fadeUp} className="spark-team-lede">
+              The passionate people driving Spark CSE Club forward.
             </motion.p>
           </motion.div>
         </div>
@@ -138,9 +128,7 @@ export default function Team() {
             <button
               type="button"
               className={`spark-team-tab ${
-                tab === "core"
-                  ? "spark-team-tab-active"
-                  : ""
+                tab === "core" ? "spark-team-tab-active" : ""
               }`}
               onClick={() => setTab("core")}
             >
@@ -150,9 +138,7 @@ export default function Team() {
             <button
               type="button"
               className={`spark-team-tab ${
-                tab === "faculty"
-                  ? "spark-team-tab-active"
-                  : ""
+                tab === "faculty" ? "spark-team-tab-active" : ""
               }`}
               onClick={() => setTab("faculty")}
             >
@@ -186,23 +172,12 @@ export default function Team() {
                   }}
                 >
                   {team.map((member) => (
-                    <motion.div
-                      key={member._id}
-                      variants={fadeUp}
-                    >
+                    <motion.div key={member._id} variants={fadeUp}>
                       <TeamCard
                         member={member}
                         memberType="core"
-                        roleLabel={
-                          roleLabels[member.role] ||
-                          member.role
-                        }
-                        onViewMore={() =>
-                          handleViewMore(
-                            member,
-                            "core"
-                          )
-                        }
+                        roleLabel={roleLabels[member.role] || member.role}
+                        onViewMore={() => handleViewMore(member, "core")}
                       />
                     </motion.div>
                   ))}
@@ -237,20 +212,12 @@ export default function Team() {
                   }}
                 >
                   {faculty.map((member) => (
-                    <motion.div
-                      key={member._id}
-                      variants={fadeUp}
-                    >
+                    <motion.div key={member._id} variants={fadeUp}>
                       <TeamCard
                         member={member}
                         memberType="faculty"
                         roleLabel={member.designation}
-                        onViewMore={() =>
-                          handleViewMore(
-                            member,
-                            "faculty"
-                          )
-                        }
+                        onViewMore={() => handleViewMore(member, "faculty")}
                       />
                     </motion.div>
                   ))}
@@ -269,8 +236,7 @@ export default function Team() {
           memberType={selectedMember.memberType}
           roleLabel={
             selectedMember.memberType === "core"
-              ? roleLabels[selectedMember.role] ||
-                selectedMember.role
+              ? roleLabels[selectedMember.role] || selectedMember.role
               : selectedMember.designation
           }
           onClose={handleCloseModal}

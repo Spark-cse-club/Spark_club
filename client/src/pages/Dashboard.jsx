@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
-import DashboardSidebar from "../components/common/DashboardSidebar.jsx";
+import DashboardSidebar from "../components/Common/DashboardSidebar.jsx";
 import "./Dashboard.css";
 
 export default function Dashboard() {
@@ -15,10 +15,7 @@ export default function Dashboard() {
   return (
     <div className="spark-dashboard-layout">
       {/* Sidebar */}
-      <DashboardSidebar
-        isOpen={sidebarOpen}
-        onClose={closeSidebar}
-      />
+      <DashboardSidebar isOpen={sidebarOpen} onClose={closeSidebar} />
 
       {/* Mobile Overlay */}
       {sidebarOpen && (
@@ -42,9 +39,7 @@ export default function Dashboard() {
             {sidebarOpen ? <FiX size={18} /> : <FiMenu size={18} />}
           </button>
 
-          <span className="spark-dashboard-mobile-title">
-            Dashboard
-          </span>
+          <span className="spark-dashboard-mobile-title">Dashboard</span>
         </header>
 
         {/* Dashboard Pages */}

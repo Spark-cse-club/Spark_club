@@ -7,10 +7,10 @@ import {
   updateProject,
   deleteProject,
 } from "../api/api.js";
-import Modal from "../components/common/Modal.jsx";
-import ConfirmDialog from "../components/common/ConfirmDialog.jsx";
-import ImageUpload from "../components/common/ImageUpload.jsx";
-import Loader from "../components/common/Loader.jsx";
+import Modal from "../components/Common/Modal.jsx";
+import ConfirmDialog from "../components/Common/ConfirmDialog.jsx";
+import ImageUpload from "../components/Common/ImageUpload.jsx";
+import Loader from "../components/Common/Loader.jsx";
 import "./ProjectsManager.css";
 
 export default function ProjectsManager() {
@@ -142,7 +142,10 @@ export default function ProjectsManager() {
     <div>
       <div className="projects-manager-header">
         <h1 className="projects-manager-title">Projects Management</h1>
-        <button className="projects-manager-btn projects-manager-btn-primary" onClick={openAddModal}>
+        <button
+          className="projects-manager-btn projects-manager-btn-primary"
+          onClick={openAddModal}
+        >
           <FiPlus /> Add Project
         </button>
       </div>
@@ -160,10 +163,7 @@ export default function ProjectsManager() {
           <tbody>
             {projects.length === 0 ? (
               <tr>
-                <td
-                  colSpan="4"
-                  className="projects-manager-empty-row"
-                >
+                <td colSpan="4" className="projects-manager-empty-row">
                   No projects found
                 </td>
               </tr>
@@ -189,7 +189,9 @@ export default function ProjectsManager() {
                     </div>
                   </td>
                   <td>
-                    <span className="projects-manager-badge">{project.category}</span>
+                    <span className="projects-manager-badge">
+                      {project.category}
+                    </span>
                   </td>
                   <td>{new Date(project.startDate).toLocaleDateString()}</td>
                   <td style={{ textAlign: "right" }}>
@@ -222,12 +224,11 @@ export default function ProjectsManager() {
         onClose={() => setIsModalOpen(false)}
         title={isEdit ? "Edit Project" : "Add Project"}
       >
-        <form
-          onSubmit={handleSubmit}
-          className="projects-manager-form"
-        >
+        <form onSubmit={handleSubmit} className="projects-manager-form">
           <div className="projects-manager-form-group">
-            <label className="projects-manager-form-label">Project Name *</label>
+            <label className="projects-manager-form-label">
+              Project Name *
+            </label>
             <input
               type="text"
               name="projectName"
@@ -274,7 +275,9 @@ export default function ProjectsManager() {
           </div>
           <div className="projects-manager-form-grid">
             <div className="projects-manager-form-group">
-              <label className="projects-manager-form-label">Start Date *</label>
+              <label className="projects-manager-form-label">
+                Start Date *
+              </label>
               <input
                 type="date"
                 name="startDate"
@@ -311,7 +314,11 @@ export default function ProjectsManager() {
             >
               Cancel
             </button>
-            <button type="submit" className="projects-manager-btn projects-manager-btn-primary" disabled={saving}>
+            <button
+              type="submit"
+              className="projects-manager-btn projects-manager-btn-primary"
+              disabled={saving}
+            >
               {saving ? "Saving..." : "Save Project"}
             </button>
           </div>

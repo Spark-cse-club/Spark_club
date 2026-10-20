@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FiImage } from "react-icons/fi";
 
 import { getGallery } from "../api/api.js";
-import Loader from "../components/common/Loader.jsx";
+import Loader from "../components/Common/Loader.jsx";
 
 import GalleryCard from "../components/Gallery/GalleryCard.jsx";
 import GalleryModal from "../components/Gallery/GalleryModal.jsx";
@@ -59,9 +59,7 @@ export default function Gallery() {
   const filteredGalleries =
     filter === "all"
       ? galleries
-      : galleries.filter(
-          (gallery) => gallery.category === filter
-        );
+      : galleries.filter((gallery) => gallery.category === filter);
 
   if (loading) {
     return <Loader />;
@@ -69,7 +67,6 @@ export default function Gallery() {
 
   return (
     <div className="spark-gallery-page">
-
       {/* ================================
           HERO
       ================================= */}
@@ -96,22 +93,13 @@ export default function Gallery() {
               </span>
             </motion.div>
 
-            <motion.h1
-              variants={fadeUp}
-              className="spark-gallery-heading"
-            >
+            <motion.h1 variants={fadeUp} className="spark-gallery-heading">
               Photo{" "}
-              <span className="spark-gallery-heading-accent">
-                Gallery
-              </span>
+              <span className="spark-gallery-heading-accent">Gallery</span>
             </motion.h1>
 
-            <motion.p
-              variants={fadeUp}
-              className="spark-gallery-lede"
-            >
-              Memories captured from our events, workshops,
-              and celebrations.
+            <motion.p variants={fadeUp} className="spark-gallery-lede">
+              Memories captured from our events, workshops, and celebrations.
             </motion.p>
           </motion.div>
         </div>
@@ -123,7 +111,6 @@ export default function Gallery() {
 
       <section className="spark-gallery-body">
         <div className="spark-gallery-inner">
-
           {/* Filters */}
 
           <div className="spark-gallery-filters">
@@ -132,16 +119,13 @@ export default function Gallery() {
                 key={category}
                 type="button"
                 className={`spark-gallery-filter ${
-                  filter === category
-                    ? "spark-gallery-filter-active"
-                    : ""
+                  filter === category ? "spark-gallery-filter-active" : ""
                 }`}
                 onClick={() => setFilter(category)}
               >
                 {category === "all"
                   ? "All"
-                  : category.charAt(0).toUpperCase() +
-                    category.slice(1)}
+                  : category.charAt(0).toUpperCase() + category.slice(1)}
               </button>
             ))}
           </div>
@@ -150,9 +134,7 @@ export default function Gallery() {
 
           {filteredGalleries.length === 0 ? (
             <div className="spark-gallery-empty">
-              <div className="spark-gallery-empty-icon">
-                🖼️
-              </div>
+              <div className="spark-gallery-empty-icon">🖼️</div>
 
               <p>No gallery items found.</p>
             </div>
@@ -170,15 +152,10 @@ export default function Gallery() {
               className="spark-gallery-grid"
             >
               {filteredGalleries.map((gallery) => (
-                <motion.div
-                  key={gallery._id}
-                  variants={fadeUp}
-                >
+                <motion.div key={gallery._id} variants={fadeUp}>
                   <GalleryCard
                     gallery={gallery}
-                    onViewDetails={() =>
-                      setSelectedGallery(gallery)
-                    }
+                    onViewDetails={() => setSelectedGallery(gallery)}
                   />
                 </motion.div>
               ))}

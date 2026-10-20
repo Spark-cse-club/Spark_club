@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FiAward } from "react-icons/fi";
 
 import { getAchievements } from "../api/api.js";
-import Loader from "../components/common/Loader.jsx";
+import Loader from "../components/Common/Loader.jsx";
 import AchievementCard from "../components/Achievement/AchievementCard.jsx";
 import AchievementModal from "../components/Achievement/AchievementModal.jsx";
 
@@ -40,18 +40,14 @@ const formatCategory = (category) =>
     ? "All"
     : category
         .split("_")
-        .map(
-          (word) =>
-            word.charAt(0).toUpperCase() + word.slice(1)
-        )
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
 
 export default function Achievements() {
   const [achievements, setAchievements] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
-  const [selectedAchievement, setSelectedAchievement] =
-    useState(null);
+  const [selectedAchievement, setSelectedAchievement] = useState(null);
 
   useEffect(() => {
     const fetchAchievements = async () => {
@@ -60,10 +56,7 @@ export default function Achievements() {
 
         setAchievements(response?.data || []);
       } catch (error) {
-        console.error(
-          "Failed to fetch achievements:",
-          error
-        );
+        console.error("Failed to fetch achievements:", error);
 
         setAchievements([]);
       } finally {
@@ -77,10 +70,7 @@ export default function Achievements() {
   const filteredAchievements =
     filter === "all"
       ? achievements
-      : achievements.filter(
-          (achievement) =>
-            achievement.category === filter
-        );
+      : achievements.filter((achievement) => achievement.category === filter);
 
   if (loading) {
     return <Loader />;
@@ -111,22 +101,15 @@ export default function Achievements() {
               </span>
             </motion.div>
 
-            <motion.h1
-              variants={fadeUp}
-              className="spark-achievements-heading"
-            >
+            <motion.h1 variants={fadeUp} className="spark-achievements-heading">
               Our{" "}
               <span className="spark-achievements-heading-accent">
                 Achievements
               </span>
             </motion.h1>
 
-            <motion.p
-              variants={fadeUp}
-              className="spark-achievements-lede"
-            >
-              Celebrating the milestones and victories of our
-              talented members.
+            <motion.p variants={fadeUp} className="spark-achievements-lede">
+              Celebrating the milestones and victories of our talented members.
             </motion.p>
           </motion.div>
         </div>
@@ -142,9 +125,7 @@ export default function Achievements() {
                 key={category}
                 type="button"
                 className={`spark-achievements-filter ${
-                  filter === category
-                    ? "spark-achievements-filter-active"
-                    : ""
+                  filter === category ? "spark-achievements-filter-active" : ""
                 }`}
                 onClick={() => setFilter(category)}
               >
@@ -176,15 +157,10 @@ export default function Achievements() {
               className="spark-achievements-grid"
             >
               {filteredAchievements.map((achievement) => (
-                <motion.div
-                  key={achievement._id}
-                  variants={fadeUp}
-                >
+                <motion.div key={achievement._id} variants={fadeUp}>
                   <AchievementCard
                     achievement={achievement}
-                    onViewDetails={() =>
-                      setSelectedAchievement(achievement)
-                    }
+                    onViewDetails={() => setSelectedAchievement(achievement)}
                   />
                 </motion.div>
               ))}

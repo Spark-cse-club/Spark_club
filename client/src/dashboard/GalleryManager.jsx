@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  FiEdit2,
-  FiImage,
-  FiPlus,
-  FiTrash2,
-} from "react-icons/fi";
+import { FiEdit2, FiImage, FiPlus, FiTrash2 } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 import {
@@ -14,10 +9,10 @@ import {
   deleteGallery,
 } from "../api/api.js";
 
-import Modal from "../components/common/Modal.jsx";
-import ConfirmDialog from "../components/common/ConfirmDialog.jsx";
-import ImageUpload from "../components/common/ImageUpload.jsx";
-import Loader from "../components/common/Loader.jsx";
+import Modal from "../components/Common/Modal.jsx";
+import ConfirmDialog from "../components/Common/ConfirmDialog.jsx";
+import ImageUpload from "../components/Common/ImageUpload.jsx";
+import Loader from "../components/Common/Loader.jsx";
 
 import "./GalleryManager.css";
 
@@ -206,10 +201,7 @@ export default function GalleryManager() {
     } catch (error) {
       console.error(error);
 
-      toast.error(
-        error?.response?.data?.message ||
-          "Something went wrong"
-      );
+      toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setSaving(false);
     }
@@ -242,8 +234,7 @@ export default function GalleryManager() {
       console.error(error);
 
       toast.error(
-        error?.response?.data?.message ||
-          "Failed to delete gallery item"
+        error?.response?.data?.message || "Failed to delete gallery item",
       );
     } finally {
       setSaving(false);
@@ -264,15 +255,12 @@ export default function GalleryManager() {
 
   return (
     <div className="gallery-manager">
-
       {/* ========================================
           HEADER
       ======================================== */}
 
       <div className="gallery-manager-header">
-        <h1 className="gallery-manager-title">
-          Gallery Management
-        </h1>
+        <h1 className="gallery-manager-title">Gallery Management</h1>
 
         <button
           type="button"
@@ -303,23 +291,17 @@ export default function GalleryManager() {
           <tbody>
             {gallery.length === 0 ? (
               <tr>
-                <td
-                  colSpan="5"
-                  className="gallery-manager-empty-row"
-                >
+                <td colSpan="5" className="gallery-manager-empty-row">
                   No gallery items found
                 </td>
               </tr>
             ) : (
               gallery.map((item) => (
                 <tr key={item._id}>
-
                   {/* Gallery */}
                   <td>
                     <div className="gallery-manager-item-info">
-
-                      {item.images?.length > 0 &&
-                      item.images[0]?.url ? (
+                      {item.images?.length > 0 && item.images[0]?.url ? (
                         <img
                           src={item.images[0].url}
                           alt={item.title || "Gallery"}
@@ -338,12 +320,9 @@ export default function GalleryManager() {
 
                         <span className="gallery-manager-image-count">
                           {item.images?.length || 0}{" "}
-                          {item.images?.length === 1
-                            ? "image"
-                            : "images"}
+                          {item.images?.length === 1 ? "image" : "images"}
                         </span>
                       </div>
-
                     </div>
                   </td>
 
@@ -357,28 +336,22 @@ export default function GalleryManager() {
                   {/* Event */}
                   <td>
                     <div className="gallery-manager-event-info">
-
-                      {item.eventName && (
-                        <div>{item.eventName}</div>
-                      )}
+                      {item.eventName && <div>{item.eventName}</div>}
 
                       {item.eventDate && (
                         <div>
-                          {new Date(
-                            item.eventDate
-                          ).toLocaleDateString("en-IN", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          })}
+                          {new Date(item.eventDate).toLocaleDateString(
+                            "en-IN",
+                            {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            },
+                          )}
                         </div>
                       )}
 
-                      {!item.eventName &&
-                        !item.eventDate && (
-                          <span>-</span>
-                        )}
-
+                      {!item.eventName && !item.eventDate && <span>-</span>}
                     </div>
                   </td>
 
@@ -392,13 +365,10 @@ export default function GalleryManager() {
                   {/* Actions */}
                   <td>
                     <div className="gallery-manager-actions">
-
                       <button
                         type="button"
                         className="gallery-manager-btn-icon"
-                        onClick={() =>
-                          openEditModal(item)
-                        }
+                        onClick={() => openEditModal(item)}
                         title="Edit"
                       >
                         <FiEdit2 size={14} />
@@ -407,17 +377,13 @@ export default function GalleryManager() {
                       <button
                         type="button"
                         className="gallery-manager-btn-icon gallery-manager-btn-delete"
-                        onClick={() =>
-                          confirmDelete(item._id)
-                        }
+                        onClick={() => confirmDelete(item._id)}
                         title="Delete"
                       >
                         <FiTrash2 size={14} />
                       </button>
-
                     </div>
                   </td>
-
                 </tr>
               ))
             )}
@@ -432,23 +398,13 @@ export default function GalleryManager() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={
-          isEdit
-            ? "Edit Gallery Item"
-            : "Add Gallery Item"
-        }
+        title={isEdit ? "Edit Gallery Item" : "Add Gallery Item"}
         size="lg"
       >
-        <form
-          onSubmit={handleSubmit}
-          className="gallery-manager-form"
-        >
-
+        <form onSubmit={handleSubmit} className="gallery-manager-form">
           {/* Title */}
           <div className="gallery-manager-form-group">
-            <label className="gallery-manager-form-label">
-              Title *
-            </label>
+            <label className="gallery-manager-form-label">Title *</label>
 
             <input
               type="text"
@@ -463,9 +419,7 @@ export default function GalleryManager() {
 
           {/* Description */}
           <div className="gallery-manager-form-group">
-            <label className="gallery-manager-form-label">
-              Description *
-            </label>
+            <label className="gallery-manager-form-label">Description *</label>
 
             <textarea
               name="description"
@@ -479,11 +433,8 @@ export default function GalleryManager() {
 
           {/* Category + Event Name */}
           <div className="gallery-manager-form-grid">
-
             <div className="gallery-manager-form-group">
-              <label className="gallery-manager-form-label">
-                Category *
-              </label>
+              <label className="gallery-manager-form-label">Category *</label>
 
               <select
                 name="category"
@@ -493,24 +444,17 @@ export default function GalleryManager() {
                 required
               >
                 {categories.map((category) => (
-                  <option
-                    key={category}
-                    value={category}
-                  >
+                  <option key={category} value={category}>
                     {category
                       .replace("_", " ")
-                      .replace(/\b\w/g, (letter) =>
-                        letter.toUpperCase()
-                      )}
+                      .replace(/\b\w/g, (letter) => letter.toUpperCase())}
                   </option>
                 ))}
               </select>
             </div>
 
             <div className="gallery-manager-form-group">
-              <label className="gallery-manager-form-label">
-                Event Name
-              </label>
+              <label className="gallery-manager-form-label">Event Name</label>
 
               <input
                 type="text"
@@ -521,14 +465,11 @@ export default function GalleryManager() {
                 placeholder="e.g. DSA Showdown"
               />
             </div>
-
           </div>
 
           {/* Event Date */}
           <div className="gallery-manager-form-group">
-            <label className="gallery-manager-form-label">
-              Event Date
-            </label>
+            <label className="gallery-manager-form-label">Event Date</label>
 
             <input
               type="date"
@@ -541,9 +482,7 @@ export default function GalleryManager() {
 
           {/* Images */}
           <div className="gallery-manager-form-group">
-            <label className="gallery-manager-form-label">
-              Images
-            </label>
+            <label className="gallery-manager-form-label">Images</label>
 
             <ImageUpload
               value={formData.images}
@@ -555,13 +494,10 @@ export default function GalleryManager() {
 
           {/* Modal Actions */}
           <div className="gallery-manager-modal-actions">
-
             <button
               type="button"
               className="gallery-manager-btn gallery-manager-btn-ghost"
-              onClick={() =>
-                setIsModalOpen(false)
-              }
+              onClick={() => setIsModalOpen(false)}
               disabled={saving}
             >
               Cancel
@@ -575,12 +511,10 @@ export default function GalleryManager() {
               {saving
                 ? "Saving..."
                 : isEdit
-                ? "Update Gallery"
-                : "Save Gallery"}
+                  ? "Update Gallery"
+                  : "Save Gallery"}
             </button>
-
           </div>
-
         </form>
       </Modal>
 
@@ -594,7 +528,6 @@ export default function GalleryManager() {
         onConfirm={handleDelete}
         loading={saving}
       />
-
     </div>
   );
 }
